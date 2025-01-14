@@ -14,12 +14,14 @@ private:
     bool touchingLimitSwitch = false;
     bool badColour = false;
 
+    int reverseTimer = 0;
+
     OpticalSensor OpticalSensor_;
     LimitSwitch LimSwitch_;
 
 public:
     RingDetector() : OpticalSensor_(1), LimSwitch_('B') {
-        OpticalSensor_.LEDon();
+        SortOn();
     }
 
     void Tick() {
@@ -29,8 +31,10 @@ public:
         if (!colourSort) return;
 
         if (LimSwitch_.GetValue()) {
+            if (!touchingLimitSwitch) {
+                ring = OpticalSensor_.GetRing();
+            }
             touchingLimitSwitch = true;
-            ring = OpticalSensor_.GetRing(); //Not going to work because limit switch is still pressed when the ring moves off of optical snesor
         }
         else if (touchingLimitSwitch) {  // Rising edge of limit switch
             switch (ring)
@@ -45,10 +49,14 @@ public:
                 break;
             }
 
-            // do something here that makes hooks go backwards
+            if (badColour) {
+                reverseTimer = 20;
+            }
             touchingLimitSwitch = false;
             ring = OpticalSensor::RingType::None;
         }
+
+        reverseTimer--;
     }
 
     void SortOn() {
@@ -58,6 +66,10 @@ public:
     void SortOff() {
         colourSort = false;
         OpticalSensor_.LEDoff();
+    }
+
+    int GetReverseTimer() {
+        return reverseTimer;
     }
 };
 
