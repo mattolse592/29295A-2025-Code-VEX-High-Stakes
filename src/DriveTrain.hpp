@@ -6,8 +6,8 @@
 // Chassis constructor
 Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    { -1, -6, -19 },     // Left Chassis Ports (negative port will reverse it!)
-    { 8, 13, 17 },  // Right Chassis Ports (negative port will reverse it!)
+    { 1, -3, 4 },     // Left Chassis Ports (negative port will reverse it!)
+    { -6, 7, -8 },  // Right Chassis Ports (negative port will reverse it!)
 
     15,      // IMU Port
     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
