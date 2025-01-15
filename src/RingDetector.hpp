@@ -20,7 +20,7 @@ private:
     LimitSwitch LimSwitch_;
 
 public:
-    RingDetector() : OpticalSensor_(1), LimSwitch_('B') {
+    RingDetector() : OpticalSensor_(19), LimSwitch_('B') {
         SortOn();
     }
 
@@ -46,6 +46,7 @@ public:
                 badColour = allianceColourRed;
                 break;
             default:
+                badColour = false;
                 break;
             }
 
