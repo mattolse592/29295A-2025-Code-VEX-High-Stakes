@@ -56,11 +56,14 @@ public:
         if (Controller_.R1_.IsPressed()) {
             Robot_->Arm_.ManualMoveSet(true);
             Robot_->Arm_.ManualMove(Controller_.RightY_.GetPosition());
-        } else {
-            Robot_->Arm_.ManualMoveSet(false);
-        }
+        } 
+        
 
         Robot_->Arm_.SetTarget((Arm::State)(Controller_.L1_.TimesPressed() % 3));
+
+        if ( Controller_.L1_.IsPressed()) {
+            Robot_->Arm_.ManualMoveSet(false);
+        }
 
         //pistons
         if (Controller_.A_.IsOn()) {

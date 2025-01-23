@@ -12,6 +12,7 @@ private:
     pros::controller_digital_e_t Button_;
 
     int Pressed_ = 0;
+    bool dePressed_;
 public:
     TapButton(pros::controller_digital_e_t button, pros::Controller Master = master)
         : Master_(Master)
@@ -21,12 +22,21 @@ public:
 
     void Tick()
     {
-        Pressed_ = Pressed_ + 1;
+        if (Master_.get_digital_new_press(Button_))
+        {
+            Pressed_ = Pressed_ + 1;
+        }
+        dePressed_ = Master_.get_digital(Button_);
+        
     }
 
     int TimesPressed()
     {
         return Pressed_;
+    }
+     bool IsPressed()
+    {
+        return dePressed_;
     }
 };
 #endif // TAPBUTTON_HPP
