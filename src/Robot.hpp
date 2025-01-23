@@ -27,7 +27,7 @@ public:
     Robot()
         : Mogo_('A'),
           Doinker_('D'),
-          Intake_(Motor(20), Motor(20)),
+          Intake_(Motor(20), Motor(-18)),
           Arm_(Motor(-12), RotationSensor(15)),
           DriveTrain_()
 
