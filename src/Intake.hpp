@@ -31,20 +31,20 @@ public:
         Hooks_.SetSpeed(HooksSpeed_);
 
         if (RingDetector_.GetReverseTimer() > 0) {
-            Hooks_.SetSpeed(-127);
+            Hooks_.SetSpeed(127);
         }
     }
 
     void Forward()
     {
         PreRollerSpeed_ = 127;
-        HooksSpeed_ = 80;
+        HooksSpeed_ = -127;
     }
 
     void Reverse()
     {
         PreRollerSpeed_ = -127;
-        HooksSpeed_ = -127;
+        HooksSpeed_ = 127;
     }
 
     void Stop()

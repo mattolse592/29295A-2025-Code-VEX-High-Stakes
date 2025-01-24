@@ -13,6 +13,7 @@ private:
     PIDController pid_ = PIDController(2.7, 0.05, 13.0, 0.0);
 
     bool manualTakeover_ = false;
+    bool stickInput = false;
 
 public:
     enum State
@@ -39,6 +40,7 @@ public:
     }
 
     void OutputTick() {
+
         if (manualTakeover_ == false)
         {
             int current_position = RotationSensor_.GetPosition();
@@ -62,11 +64,20 @@ public:
                 break;
             }
         }
+        else {
+            pid_.setTarget(RotationSensor_.GetPosition());
+            int current_position = RotationSensor_.GetPosition();
+            double pid_output = pid_.Calculate(current_position);
+
+            // Use the output from PID to set motor speed
+            Motor_.SetSpeed(-pid_output);
+        }
     }
 
     void ManualMove(int stickInput)
     {
         Motor_.SetSpeed(stickInput / 2);
+        stickInput = true;
     }
 
     void SetTarget(State state)
