@@ -61,7 +61,7 @@ public:
 
         Robot_->Arm_.SetTarget((Arm::State)(Controller_.L1_.TimesPressed() % 3));
 
-        if ( Controller_.L1_.IsPressed()) {
+        if (Controller_.L1_.IsPressed()) {
             Robot_->Arm_.ManualMoveSet(false);
         }
 

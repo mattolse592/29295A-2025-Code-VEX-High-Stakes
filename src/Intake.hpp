@@ -38,7 +38,7 @@ public:
     void Forward()
     {
         PreRollerSpeed_ = 127;
-        HooksSpeed_ = 127;
+        HooksSpeed_ = 80;
     }
 
     void Reverse()

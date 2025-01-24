@@ -28,7 +28,7 @@ public:
 
         // Integral term
         integral_ += error;
-        if (abs(error) < 1)
+        if (abs(error) < 4)
         {
             integral_ = 0.0;
         }
