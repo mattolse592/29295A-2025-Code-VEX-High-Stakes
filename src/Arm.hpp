@@ -10,10 +10,10 @@ class Arm
 private:
     Motor Motor_;
     RotationSensor RotationSensor_;
-    PIDController pid_ = PIDController(2.7, 0.05, 13.0, 0.0);
+    PIDController pid_ = PIDController(2, 0.05, 2, 0.0);
 
     bool manualTakeover_ = false;
-    bool stickInput = false;
+    int StickInput_;
 
 public:
     enum State
@@ -22,7 +22,8 @@ public:
         LOAD = 1,
         REACH = 2,
         SCORE = 3,
-        MANUAL = 4
+        DESCORE = 4,
+        MANUAL = 5
     };
 
 private:
@@ -40,14 +41,13 @@ public:
     }
 
     void OutputTick() {
-
-        if (manualTakeover_ == false)
+        if (!manualTakeover_)
         {
             int current_position = RotationSensor_.GetPosition();
             double pid_output = pid_.Calculate(current_position);
 
             // Use the output from PID to set motor speed
-            Motor_.SetSpeed(-pid_output);
+            Motor_.SetSpeed(pid_output);
 
             switch (Target_)
             {
@@ -60,24 +60,37 @@ public:
             case REACH:
                 Reach();
                 break;
+            case SCORE:
+                Score();
+                break;
+            case DESCORE:
+                Descore();
+                break;
             default:
                 break;
             }
         }
         else {
-            pid_.setTarget(RotationSensor_.GetPosition());
-            int current_position = RotationSensor_.GetPosition();
-            double pid_output = pid_.Calculate(current_position);
+            if (StickInput_ > 10) {
+                Motor_.SetSpeed(StickInput_);
+            }
+            else {
+                pid_.setTarget(RotationSensor_.GetPosition());
+                int current_position = RotationSensor_.GetPosition();
+                double pid_output = pid_.Calculate(current_position);
 
-            // Use the output from PID to set motor speed
-            Motor_.SetSpeed(-pid_output);
+                // Use the output from PID to set motor speed
+                Motor_.SetSpeed(pid_output);
+
+                //THIS PROBABLY WONT WORK BECAUAUSE TIKCPSEED MIGHT BE TOO HIGH
+            }
+
         }
     }
 
     void ManualMove(int stickInput)
     {
-        Motor_.SetSpeed(stickInput / 2);
-        stickInput = true;
+        StickInput_ = stickInput;
     }
 
     void SetTarget(State state)
@@ -85,7 +98,7 @@ public:
         Target_ = state;
     }
 
-    void ManualMoveSet(bool takeOverSetting)
+    void ManualTakeoverSet(bool takeOverSetting)
     {
         manualTakeover_ = takeOverSetting;
     }
@@ -125,7 +138,16 @@ private:
 
     void Reach()
     {
-        pid_.setTarget(150.0);
+        pid_.setTarget(140.0);
+    }
+
+    void Score()
+    {
+        pid_.setTarget(240.0);
+    }
+
+    void Descore() {
+        pid_.setTarget(165.0);
     }
 #pragma endregion
 };
