@@ -64,7 +64,7 @@ public:
             Robot_->Arm_.ManualTakeoverSet(false);
         }
 
-        if (Controller_.Up_.IsPressed()) {
+        if (Controller_.X_.IsPressed()) {
             Robot_->Arm_.SetTarget(Arm::DESCORE);
             Controller_.L1_.SetPressed(3);
             Robot_->Arm_.ManualTakeoverSet(false);
