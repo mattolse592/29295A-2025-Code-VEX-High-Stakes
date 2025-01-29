@@ -1,10 +1,9 @@
 #include "main.h"
-
+#include "AutonBrain.hpp"
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-
 // These are out of 127
 const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 90;
@@ -13,7 +12,22 @@ const int SWING_SPEED = 110;
 ///
 // Constants
 ///
+Robot* robot;
+AutonBrain brain(robot);
 
+void brainTick() {
+    brain.Tick();
+}
+
+void test_code() {
+    pros::Task sortTask(brainTick);
+
+    chassis.pid_turn_set(45_deg, TURN_SPEED);
+    chassis.pid_wait_quick_chain();
+
+    chassis.pid_drive_set(6_in, DRIVE_SPEED);
+    chassis.pid_wait_quick_chain();
+}
 
 // ///
 // // Drive Example
