@@ -29,7 +29,7 @@ public:
         //assign drivetrain values
         Robot_->DriveTrain_.SetLeftStickValue(Controller_.LeftY_.GetPosition());
         Robot_->DriveTrain_.SetRightStickValue(Controller_.RightX_.GetPosition());
-        Robot_->DriveTrain_.SetShiftButtonValue(Controller_.R1_.IsPressed());
+        //Robot_->DriveTrain_.SetShiftButtonValue(Controller_.R1_.IsPressed());
 
         //intake
         if (Controller_.R2_.IsPressed()) {
@@ -57,6 +57,9 @@ public:
         if (Controller_.R1_.IsPressed()) {
             Robot_->Arm_.ManualTakeoverSet(true);
             Robot_->Arm_.ManualMove(Controller_.RightY_.GetPosition());
+            Robot_->Intake_.ChangeHooksSpeed(0);
+        } else {
+            Robot_->Arm_.ManualMove(0);
         }
 
         if (Controller_.L1_.IsPressed()) {

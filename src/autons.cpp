@@ -18,19 +18,22 @@ const int SWING_SPEED = 110;
 // ///
 // // Drive Example
 // ///
-// void drive_example() {
-//   // The first parameter is target inches
-//   // The second parameter is max speed the robot will drive at
-//   // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
-//   // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
+void drive_example() {
+  // The first parameter is target inches
+  // The second parameter is max speed the robot will drive at
+  // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
+  // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
 
-//   // chassis.pid_drive_set(12_in, DRIVE_SPEED);
-//   // chassis.pid_wait();
+  chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
 
-//   chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
-//   chassis.pid_wait();
 
-//   chassis.pid_turn_set(45_deg, TURN_SPEED);
+}
+
+#pragma region other autons
+// /////   chassis.pid_turn_set(45_deg, TURN_SPEED);
 //   chassis.pid_wait_quick_chain();
 
 //   chassis.pid_drive_set(6_in, DRIVE_SPEED, true);
@@ -48,9 +51,6 @@ const int SWING_SPEED = 110;
 //   // Your final motion should still be a normal pid_wait
 //   chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
 //   chassis.pid_wait();
-// }
-
-// ///
 // // Turn Example
 // ///
 // void turn_example() {
@@ -359,3 +359,4 @@ const int SWING_SPEED = 110;
 // // . . .
 // // Make your own autonomous functions here!
 // // . . .
+#pragma endregion
