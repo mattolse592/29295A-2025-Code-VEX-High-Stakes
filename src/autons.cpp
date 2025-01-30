@@ -1,9 +1,13 @@
 #include "main.h"
-#include "AutonBrain.hpp"
+//#include "main.cpp"
+//#include "AutonBrain.hpp"
+
+
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
+
 // These are out of 127
 const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 90;
@@ -12,38 +16,41 @@ const int SWING_SPEED = 110;
 ///
 // Constants
 ///
-Robot* robot;
-AutonBrain brain(robot);
 
-void brainTick() {
-    brain.Tick();
-}
+ 
 
-void test_code() {
-    pros::Task sortTask(brainTick);
+// void brainTick() {
+//     AutonBrain brain(robot);
+//     while (true) {
+//         brain.Tick();
+//     }
+    
+// }
 
-    chassis.pid_turn_set(45_deg, TURN_SPEED);
-    chassis.pid_wait_quick_chain();
-
-    chassis.pid_drive_set(6_in, DRIVE_SPEED);
-    chassis.pid_wait_quick_chain();
-}
 
 // ///
 // // Drive Example
 // ///
 void drive_example() {
-  // The first parameter is target inches
-  // The second parameter is max speed the robot will drive at
-  // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
-  // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
+    // The first parameter is target inches
+    // The second parameter is max speed the robot will drive at
+    // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
+    // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
 
-  chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
+    //pros::Task sortTask(brainTick);
 
+    //brain.intakeOn = true;
 
+    chassis.pid_drive_set(24_in, DRIVE_SPEED);
+    chassis.pid_wait();
+
+    chassis.pid_turn_set(90_deg, TURN_SPEED);
+    chassis.pid_wait_quick_chain();
+
+    //brain.armPos = Arm::DESCORE;
+
+    chassis.pid_drive_set(24_in, DRIVE_SPEED);
+    chassis.pid_wait();
 }
 
 #pragma region other autons
@@ -67,19 +74,35 @@ void drive_example() {
 //   chassis.pid_wait();
 // // Turn Example
 // ///
-// void turn_example() {
-//   // The first parameter is the target in degrees
-//   // The second parameter is max speed the robot will drive at
+void turn_example() {
+    // The first parameter is the target in degrees
+    // The second parameter is max speed the robot will drive at
+  //   chassis.pid_drive_set(24_in, DRIVE_SPEED + 17);
+  //   chassis.pid_wait_quick_chain();
 
-//   chassis.pid_turn_set(90_deg, TURN_SPEED);
-//   chassis.pid_wait();
+  //   chassis.pid_turn_set(180_deg, TURN_SPEED);
+  //   chassis.pid_wait_quick_chain();
 
-//   chassis.pid_turn_set(45_deg, TURN_SPEED);
-//   chassis.pid_wait();
+  //   chassis.pid_drive_set(24_in, DRIVE_SPEED + 17);
+  //   chassis.pid_wait_quick_chain();
 
-//   chassis.pid_turn_set(0_deg, TURN_SPEED);
-//   chassis.pid_wait();
-// }
+  //   chassis.pid_turn_set(0_deg, TURN_SPEED);
+  //   chassis.pid_wait();
+
+
+    chassis.pid_swing_set(ez::LEFT_SWING, 90_deg, SWING_SPEED / 2, 0);
+    chassis.pid_wait();
+
+    //   chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, SWING_SPEED, 45);
+    //   chassis.pid_wait();
+
+    //   chassis.pid_swing_set(ez::RIGHT_SWING, 90_deg, SWING_SPEED, 45);
+    //   chassis.pid_wait();
+
+    chassis.pid_swing_set(ez::LEFT_SWING, 0_deg, SWING_SPEED / 2, 0);
+    chassis.pid_wait();
+
+}
 
 // ///
 // // Combining Turn + Drive

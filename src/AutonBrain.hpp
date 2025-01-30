@@ -20,8 +20,9 @@ public:
     }
     
     Arm::State armPos = Arm::DOCK;
-    bool intakeOn;
-    bool mogoOn;
+    bool intakeOn = false;
+    bool mogoOn = false;
+    bool doinkerOn = false;
 
 
     void Tick()
