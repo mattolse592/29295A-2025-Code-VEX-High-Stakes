@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "A auton test",
+    "project_name": "PID tuning ",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,7 +425,8 @@
     },
     "upload_options": {
       "description": "marker",
-      "slot": 1
+      "slot": 2,
+      "after": "run"
     },
     "use_early_access": false
   }
