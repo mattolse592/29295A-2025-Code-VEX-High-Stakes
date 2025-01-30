@@ -1,6 +1,6 @@
 #include "main.h"
 //#include "main.cpp"
-//#include "AutonBrain.hpp"
+#include "AutonBrain.hpp"
 
 
 /////
@@ -17,41 +17,79 @@ const int SWING_SPEED = 110;
 // Constants
 ///
 
- 
 
-// void brainTick() {
-//     AutonBrain brain(robot);
-//     while (true) {
-//         brain.Tick();
-//     }
-    
-// }
+extern Robot* robot;
+
+AutonBrain* brain;
+
+void brainTick() {
+  
+  while (true) {
+    brain->Tick();
+
+    pros::delay(ez::util::DELAY_TIME);
+  }
+
+}
+//
+//  Autonomous A
+//
+
+void AutonA() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+
+  brain->intakeOn = true;
+
+  ch->pid_drive_set(10_in, DRIVE_SPEED);
+  ch->pid_wait();
+  brain->armPos = Arm::LOAD;
+
+  ch->pid_turn_set(180_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  ch->pid_drive_set(10_in, 40);
+  ch->pid_wait();
+
+  brain->intakeOn = false;
+  brain->armPos = Arm::REACH;
+
+  pros::delay(1500);
+
+  ch->pid_turn_set(0_deg, TURN_SPEED);
+  brain->armPos = Arm::SCORE;
+  ch->pid_wait_quick_chain();
+
+}
+
+
 
 
 // ///
 // // Drive Example
 // ///
-void drive_example() {
-    // The first parameter is target inches
-    // The second parameter is max speed the robot will drive at
-    // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
-    // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
+// void drive_example() {
+//     // The first parameter is target inches
+//     // The second parameter is max speed the robot will drive at
+//     // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
+//     // for slew, only enable it when the drive distance is greater than the slew distance + a few inches
 
-    //pros::Task sortTask(brainTick);
+//     //pros::Task sortTask(brainTick);
 
-    //brain.intakeOn = true;
+//     //brain.intakeOn = true;
 
-    chassis.pid_drive_set(24_in, DRIVE_SPEED);
-    chassis.pid_wait();
+//     chassis.pid_drive_set(24_in, DRIVE_SPEED);
+//     chassis.pid_wait();
 
-    chassis.pid_turn_set(90_deg, TURN_SPEED);
-    chassis.pid_wait_quick_chain();
+//     chassis.pid_turn_set(90_deg, TURN_SPEED);
+//     chassis.pid_wait_quick_chain();
 
-    //brain.armPos = Arm::DESCORE;
+//     //brain.armPos = Arm::DESCORE;
 
-    chassis.pid_drive_set(24_in, DRIVE_SPEED);
-    chassis.pid_wait();
-}
+//     chassis.pid_drive_set(24_in, DRIVE_SPEED);
+//     chassis.pid_wait();
+// }
 
 #pragma region other autons
 // /////   chassis.pid_turn_set(45_deg, TURN_SPEED);
@@ -74,35 +112,35 @@ void drive_example() {
 //   chassis.pid_wait();
 // // Turn Example
 // ///
-void turn_example() {
-    // The first parameter is the target in degrees
-    // The second parameter is max speed the robot will drive at
-  //   chassis.pid_drive_set(24_in, DRIVE_SPEED + 17);
-  //   chassis.pid_wait_quick_chain();
+// void turn_example() {
+//     // The first parameter is the target in degrees
+//     // The second parameter is max speed the robot will drive at
+//   //   chassis.pid_drive_set(24_in, DRIVE_SPEED + 17);
+//   //   chassis.pid_wait_quick_chain();
 
-  //   chassis.pid_turn_set(180_deg, TURN_SPEED);
-  //   chassis.pid_wait_quick_chain();
+//   //   chassis.pid_turn_set(180_deg, TURN_SPEED);
+//   //   chassis.pid_wait_quick_chain();
 
-  //   chassis.pid_drive_set(24_in, DRIVE_SPEED + 17);
-  //   chassis.pid_wait_quick_chain();
+//   //   chassis.pid_drive_set(24_in, DRIVE_SPEED + 17);
+//   //   chassis.pid_wait_quick_chain();
 
-  //   chassis.pid_turn_set(0_deg, TURN_SPEED);
-  //   chassis.pid_wait();
+//   //   chassis.pid_turn_set(0_deg, TURN_SPEED);
+//   //   chassis.pid_wait();
 
 
-    chassis.pid_swing_set(ez::LEFT_SWING, 90_deg, SWING_SPEED / 2, 0);
-    chassis.pid_wait();
+//     chassis.pid_swing_set(ez::LEFT_SWING, 90_deg, SWING_SPEED / 2, 0);
+//     chassis.pid_wait();
 
-    //   chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, SWING_SPEED, 45);
-    //   chassis.pid_wait();
+//     //   chassis.pid_swing_set(ez::RIGHT_SWING, 0_deg, SWING_SPEED, 45);
+//     //   chassis.pid_wait();
 
-    //   chassis.pid_swing_set(ez::RIGHT_SWING, 90_deg, SWING_SPEED, 45);
-    //   chassis.pid_wait();
+//     //   chassis.pid_swing_set(ez::RIGHT_SWING, 90_deg, SWING_SPEED, 45);
+//     //   chassis.pid_wait();
 
-    chassis.pid_swing_set(ez::LEFT_SWING, 0_deg, SWING_SPEED / 2, 0);
-    chassis.pid_wait();
+//     chassis.pid_swing_set(ez::LEFT_SWING, 0_deg, SWING_SPEED / 2, 0);
+//     chassis.pid_wait();
 
-}
+// }
 
 // ///
 // // Combining Turn + Drive

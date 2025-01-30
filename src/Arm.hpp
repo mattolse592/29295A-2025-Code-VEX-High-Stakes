@@ -72,7 +72,7 @@ public:
         }
         else {
             if (StickInput_ > 10 || StickInput_ < -10) {
-                Motor_.SetSpeed(StickInput_);
+                Motor_.SetSpeed(StickInput_ / 2);
             }
             else {
                 Motor_.SetSpeed(0);

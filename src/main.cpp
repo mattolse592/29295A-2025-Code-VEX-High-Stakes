@@ -1,8 +1,21 @@
 #include "main.h"
-
+#include "Robot.hpp"
 #include "MatthewBrain.hpp"
 
+
 Robot* robot;
+
+
+// // Chassis constructor
+// Drive chassis(
+//     // These are your drive motors, the first motor is used for sensing!
+//     { 1, -3, 4},     // Left Chassis Ports (negative port will reverse it!)
+//     { -6, 7, -8},  // Right Chassis Ports (negative port will reverse it!)
+
+//     10,      // IMU Port
+//     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+//     450);   // Wheel RPM = cartridge * (motor gear / wheel gear)
+
 
 
 /////
@@ -25,14 +38,14 @@ void initialize() {
   // // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.autons_add({
-      {"Drive\n\nDrive forward and come back", drive_example},
+      {"Drive\n\nDrive forward and come back", AutonA},
   });
 
   ez::as::initialize();
 
   robot = new Robot();
 
-  master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
+  master.rumble(robot->DriveTrain_.DriveTrain_.Chassis_.drive_imu_calibrated() ? "." : "---");
 }
 
 /**
@@ -69,11 +82,11 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-  chassis.pid_targets_reset();                // Resets PID targets to 0
-  chassis.drive_imu_reset();                  // Reset gyro position to 0
-  chassis.drive_sensor_reset();               // Reset drive sensors to 0
+  
+  robot->DriveTrain_.Reset();
+
  // chassis.odom_xyt_set(0_in, 0_in, 0_deg);    // Set the current position, you can start at a specific position with this
-  chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
+  robot->DriveTrain_.DriveTrain_.Chassis_.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
 
    ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
@@ -158,8 +171,12 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() {
 
+
+
+
+
+void opcontrol() {
   MatthewBrain brain(robot);
 
   while (true) {

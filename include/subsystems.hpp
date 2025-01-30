@@ -3,7 +3,7 @@
 #include "EZ-Template/api.hpp"
 #include "api.h"
 
-extern Drive chassis;
+// we have this as part of the drivetrain now: extern Drive chassis;
 
 // Your motors, sensors, etc. should go here.  Below are examples
 
