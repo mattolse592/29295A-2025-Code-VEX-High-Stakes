@@ -45,6 +45,14 @@ public:
             Robot_->Mogo_.Deactivate();
         }
 
+        if (doinkerOn) {
+            Robot_->Doinker_.Activate();
+        }
+        else {
+            Robot_->Doinker_.Deactivate();
+        }
+
+        Robot_->AutonOutputTick();
     }
 };
 #endif // AUTONBRAIN_HPP

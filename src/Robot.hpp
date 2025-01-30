@@ -21,8 +21,6 @@ public:
 
     DriveTrainCurveJoystickMath DriveTrain_;
 
-
-
 public:
     Robot()
         : Mogo_('A'),
@@ -48,5 +46,12 @@ public:
         Arm_.OutputTick();
         DriveTrain_.OutputTick();
     }
+
+    void AutonOutputTick() {
+        Intake_.OutputTick();
+        Arm_.OutputTick();
+    }
 };
+
+
 #endif // ROBOT_HPP

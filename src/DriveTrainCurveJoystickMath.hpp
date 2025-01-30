@@ -23,6 +23,7 @@ private:
     float tCoefficient = -1.1; // curve for turn
     float tCurve = 0.4;       // coefficient for turn
 
+public:
     DriveTrain DriveTrain_;
 
 public:
@@ -62,6 +63,12 @@ public:
     }
     void SetShiftButtonValue(bool value) {
         shiftButtonPressed = value;
+    }
+
+    void Reset() {
+        DriveTrain_.Chassis_.pid_targets_reset();                // Resets PID targets to 0
+        DriveTrain_.Chassis_.drive_imu_reset();                  // Reset gyro position to 0
+        DriveTrain_.Chassis_.drive_sensor_reset();
     }
 
 };
