@@ -27,16 +27,19 @@ public:
             Pressed_ = Pressed_ + 1;
         }
         dePressed_ = Master_.get_digital(Button_);
-        
+
     }
 
     int TimesPressed()
     {
         return Pressed_;
     }
-     bool IsPressed()
+    bool IsPressed()
     {
         return dePressed_;
+    }
+    void SetPressed(int pressedSet) {
+        Pressed_ = pressedSet;
     }
 };
 #endif // TAPBUTTON_HPP

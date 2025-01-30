@@ -29,7 +29,7 @@ public:
         //assign drivetrain values
         Robot_->DriveTrain_.SetLeftStickValue(Controller_.LeftY_.GetPosition());
         Robot_->DriveTrain_.SetRightStickValue(Controller_.RightX_.GetPosition());
-        Robot_->DriveTrain_.SetShiftButtonValue(Controller_.R1_.IsPressed());
+        //Robot_->DriveTrain_.SetShiftButtonValue(Controller_.R1_.IsPressed());
 
         //intake
         if (Controller_.R2_.IsPressed()) {
@@ -44,8 +44,9 @@ public:
 
         if (Controller_.Down_.IsOn()) {
             Robot_->Intake_.SortOn();
-        } else {
-             Robot_->Intake_.SortOff();
+        }
+        else {
+            Robot_->Intake_.SortOff();
         }
 
         //arm
@@ -54,15 +55,22 @@ public:
         }
 
         if (Controller_.R1_.IsPressed()) {
-            Robot_->Arm_.ManualMoveSet(true);
+            Robot_->Arm_.ManualTakeoverSet(true);
             Robot_->Arm_.ManualMove(Controller_.RightY_.GetPosition());
-        } 
-        
-
-        Robot_->Arm_.SetTarget((Arm::State)(Controller_.L1_.TimesPressed() % 3));
+            Robot_->Intake_.ChangeHooksSpeed(0);
+        } else {
+            Robot_->Arm_.ManualMove(0);
+        }
 
         if (Controller_.L1_.IsPressed()) {
-            Robot_->Arm_.ManualMoveSet(false);
+            Robot_->Arm_.SetTarget((Arm::State)(Controller_.L1_.TimesPressed() % 4));
+            Robot_->Arm_.ManualTakeoverSet(false);
+        }
+
+        if (Controller_.X_.IsPressed()) {
+            Robot_->Arm_.SetTarget(Arm::DESCORE);
+            Controller_.L1_.SetPressed(3);
+            Robot_->Arm_.ManualTakeoverSet(false);
         }
 
         //pistons
@@ -72,7 +80,7 @@ public:
         else {
             Robot_->Mogo_.Deactivate();
         }
-        
+
         if (Controller_.B_.IsOn()) {
             Robot_->Doinker_.Activate();
         }
