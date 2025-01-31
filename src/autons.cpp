@@ -37,14 +37,19 @@ void AutonA() {
   pros::Task tickTask(brainTick);
   brain->SetAllianceAsRed(false);
 
-  //score on alliance stake then back into goal clamp
+  //move forward and score on alliance stake
   brain->armPos = Arm::LOAD;
   brain->intakeOn = true;
-  pros::delay(500);
-  ch->pid_drive_set(3, 50);
+  pros::delay(600);
+  ch->pid_drive_set(4, 50);
   brain->intakeOn = false;
   brain->armPos = Arm::SCORE;  
-  pros::delay(500);
+  pros::delay(700);
+
+  //move back into mogo
+  brain->armPos = Arm::DOCK;
+  ch->pid_swing_set(ez::LEFT_SWING, -45_deg, SWING_SPEED, 65);
+  ch->pid_wait();
   
 }
 
