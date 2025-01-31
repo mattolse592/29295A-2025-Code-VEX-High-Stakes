@@ -19,48 +19,33 @@ const int SWING_SPEED = 110;
 
 
 extern Robot* robot;
-
 AutonBrain* brain;
 
 void brainTick() {
-  
   while (true) {
     brain->Tick();
-
     pros::delay(ez::util::DELAY_TIME);
   }
-
 }
-//
-//  Autonomous A
-//
 
+//
+//  Autonomous testing, can delete 
+//
 void AutonA() {
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
   brain = new AutonBrain(robot);
   pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(false);
 
-  brain->intakeOn = true;
-
-  ch->pid_drive_set(10_in, DRIVE_SPEED);
-  ch->pid_wait();
+  //score on alliance stake then back into goal clamp
   brain->armPos = Arm::LOAD;
-
-  ch->pid_turn_set(180_deg, TURN_SPEED);
-  ch->pid_wait_quick_chain();
-
-  ch->pid_drive_set(10_in, 40);
-  ch->pid_wait();
-
+  brain->intakeOn = true;
+  pros::delay(500);
+  ch->pid_drive_set(3, 50);
   brain->intakeOn = false;
-  brain->armPos = Arm::REACH;
-
-  pros::delay(1500);
-
-  ch->pid_turn_set(0_deg, TURN_SPEED);
-  brain->armPos = Arm::SCORE;
-  ch->pid_wait_quick_chain();
-
+  brain->armPos = Arm::SCORE;  
+  pros::delay(500);
+  
 }
 
 

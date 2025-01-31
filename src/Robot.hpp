@@ -51,6 +51,10 @@ public:
         Intake_.OutputTick();
         Arm_.OutputTick();
     }
+
+    void SetAllianceAsRed(bool isRed) {
+        Intake_.SetAllianceAsRed(isRed);
+    }
 };
 
 
