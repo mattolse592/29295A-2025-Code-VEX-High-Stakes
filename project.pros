@@ -426,7 +426,7 @@
     "upload_options": {
       "description": "bark",
       "slot": 3,
-      "after": "run",
+      "after": "screen",
       "icon": "pizza"
     },
     "use_early_access": false
