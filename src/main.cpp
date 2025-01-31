@@ -38,7 +38,8 @@ void initialize() {
   // // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.autons_add({
-      {"Drive\n\nDrive forward and come back", AutonA},
+      //{"Drive\n\nDrive forward and come back", safeRed},
+      {"skills", skills},
   });
 
   ez::as::initialize();
@@ -172,13 +173,10 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 
-
-
-
-
 void opcontrol() {
   MatthewBrain brain(robot);
-
+  robot->SetAllianceAsRed(true);
+  
   while (true) {
     brain.Tick();
 

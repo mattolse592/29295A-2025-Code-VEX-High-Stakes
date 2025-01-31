@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "BlueSafeAuton",
+    "project_name": "skills",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -424,8 +424,8 @@
       }
     },
     "upload_options": {
-      "description": "marker",
-      "slot": 1,
+      "description": "bark",
+      "slot": 3,
       "after": "run",
       "icon": "pizza"
     },

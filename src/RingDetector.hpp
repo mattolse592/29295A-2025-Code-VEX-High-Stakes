@@ -7,7 +7,7 @@
 class RingDetector {
 private:
     bool colourSort = true;
-    bool allianceColourRed = true;
+    bool allianceColourRed;
 
     OpticalSensor::RingType ring = OpticalSensor::RingType::None;
 
@@ -31,9 +31,7 @@ public:
         if (!colourSort) return;
 
         if (LimSwitch_.GetValue()) {
-            if (!touchingLimitSwitch) {
-                ring = OpticalSensor_.GetRing();
-            }
+            ring = OpticalSensor_.GetRing();
             touchingLimitSwitch = true;
         }
         else if (touchingLimitSwitch) {  // Rising edge of limit switch

@@ -4,7 +4,9 @@ void default_constants();
 
 void test_code();
 void drive_example();
-void AutonA();
+void safeBlue();
+void safeRed();
+void skills();
 
 
 
