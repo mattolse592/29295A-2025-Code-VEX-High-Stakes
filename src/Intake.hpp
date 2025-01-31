@@ -71,5 +71,9 @@ public:
         RingDetector_.SortOff();
     }
 
+    void SetAllianceAsRed(bool isRed) {
+        RingDetector_.SetAllianceAsRed(isRed);
+    }
+
 };
 #endif // INTAKE_HPP

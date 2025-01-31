@@ -72,6 +72,10 @@ public:
     int GetReverseTimer() {
         return reverseTimer;
     }
+
+    void SetAllianceAsRed(bool isRed) {
+        allianceColourRed = isRed;
+    }
 };
 
 #endif  // RINGDETECTOR_HPP

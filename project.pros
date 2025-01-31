@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "PID tuning ",
+    "project_name": "BlueSafeAuton",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,8 +425,9 @@
     },
     "upload_options": {
       "description": "marker",
-      "slot": 2,
-      "after": "none"
+      "slot": 1,
+      "after": "run",
+      "icon": "pizza"
     },
     "use_early_access": false
   }

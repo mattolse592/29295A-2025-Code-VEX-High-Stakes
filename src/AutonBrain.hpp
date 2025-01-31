@@ -11,7 +11,6 @@ private:
 
     Robot* Robot_;
    
-
 public:
     AutonBrain(Robot* Robot)
         : Robot_(Robot)
@@ -53,6 +52,10 @@ public:
         }
 
         Robot_->AutonOutputTick();
+    }
+
+    void SetAllianceAsRed(bool isRed) {
+        Robot_->SetAllianceAsRed(isRed);
     }
 };
 #endif // AUTONBRAIN_HPP
