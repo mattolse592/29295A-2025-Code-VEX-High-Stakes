@@ -92,6 +92,7 @@ void safeBlue() {
     ch->pid_wait_quick_chain();
     ch->pid_drive_set(40, DRIVE_SPEED);
     ch->pid_wait_quick_chain();
+
 }
 
 void safeRed() {
