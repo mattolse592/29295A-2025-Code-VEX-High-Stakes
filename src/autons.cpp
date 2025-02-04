@@ -10,7 +10,7 @@
 
 // These are out of 127
 int DRIVE_SPEED = 110;
-const int TURN_SPEED = 90;
+const int TURN_SPEED = 80;
 const int SWING_SPEED = 110;
 
 ///
@@ -158,7 +158,8 @@ void safeRed() {
 }
 
 void skills() {
-  DRIVE_SPEED = 90;
+  DRIVE_SPEED = 80;
+
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
   brain = new AutonBrain(robot);
   pros::Task tickTask(brainTick);
@@ -180,7 +181,7 @@ void skills() {
   //drive into 1st mogo 
   ch->pid_turn_set(90, TURN_SPEED);
   ch->pid_wait();
-  ch->pid_drive_set(-19.6, 70);
+  ch->pid_drive_set(-19.6, 60);
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
   brain->intakeOn = true;
@@ -210,7 +211,7 @@ void skills() {
   ch->pid_wait();
   ch->pid_drive_set(4, DRIVE_SPEED);
   ch->pid_wait();
-  pros::delay(400);
+  pros::delay(800);
   brain->intakeOn = false;
   brain->armPos = Arm::SCORE;
   pros::delay(900);
@@ -233,14 +234,15 @@ void skills() {
   ch->pid_wait_quick_chain();
   ch->pid_turn_set(-150, TURN_SPEED - 20);
   ch->pid_wait();
-  ch->pid_drive_set(15, DRIVE_SPEED);
+  ch->pid_drive_set(16, DRIVE_SPEED - 20);
   ch->pid_wait();
 
   //put mogo in corner
   ch->pid_turn_set(169, TURN_SPEED);
   ch->pid_wait();
-  ch->pid_drive_set(-20, DRIVE_SPEED);
+  ch->pid_drive_set(-19, DRIVE_SPEED);
   ch->pid_wait();
+  pros::delay(500);
 
   brain->mogoOn = false;
   pros::delay(300);
@@ -255,12 +257,12 @@ void skills() {
   ch->pid_drive_set(-27, DRIVE_SPEED - 40);
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
-  pros::delay(600);
+  pros::delay(500);
 
   // drive to 1st ring
   ch->pid_turn_set(180, TURN_SPEED);
   ch->pid_wait();
-  ch->pid_drive_set(14, DRIVE_SPEED);
+  ch->pid_drive_set(18, DRIVE_SPEED);
   ch->pid_wait();
 
   // drive to 2nd 
@@ -270,24 +272,24 @@ void skills() {
   ch->pid_wait();
 
   // drive to wall stake
-  ch->pid_turn_set(180, TURN_SPEED);
+  ch->pid_turn_set(135, TURN_SPEED);
   ch->pid_wait();
-  ch->pid_drive_set(12, DRIVE_SPEED);
+  ch->pid_drive_set(28, DRIVE_SPEED);
   ch->pid_wait();
-  ch->pid_swing_set(ez::RIGHT_SWING, 90_deg, SWING_SPEED, 5);
-  
+  ch->pid_turn_set(90, TURN_SPEED);
   ch->pid_wait();
 
+
   //score on wall stake
-  ch->pid_drive_set(8, DRIVE_SPEED);
-  ch->pid_wait();
   brain->armPos = Arm::LOAD;
-  pros::delay(1000);
+  ch->pid_drive_set(10, DRIVE_SPEED);
+  ch->pid_wait();
+  pros::delay(1100);
   brain->intakeOn = false;
   brain->armPos = Arm::SCORE;
   pros::delay(900);
   //back away from wall stake
-  ch->pid_drive_set(-12, DRIVE_SPEED);
+  ch->pid_drive_set(-14, DRIVE_SPEED);
   ch->pid_wait();
 
   //drive to corner rings
@@ -327,7 +329,7 @@ void skills() {
   ch->pid_wait();
   ch->pid_turn_set(250, TURN_SPEED);
   ch->pid_wait();
-  ch->pid_drive_set(65, 60);
+  ch->pid_drive_set(63, 60);
   ch->pid_wait_quick_chain();
   brain->intakeOn = false;
   ch->pid_turn_set(180, TURN_SPEED);
@@ -338,7 +340,7 @@ void skills() {
   ch->pid_wait();
   brain->armPos = Arm::SCORE;
 
- 
+
 
 
 
