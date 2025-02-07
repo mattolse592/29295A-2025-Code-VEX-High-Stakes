@@ -32,10 +32,10 @@ public:
     ToggleButton A_;
     ToggleButton B_;
     HoldButton X_;
-    HoldButton Y_;
+    ToggleButton Y_;
 
-    HoldButton Up_;
-    ToggleButton Down_;
+    TapButton Up_;
+    TapButton Down_;
     HoldButton Left_;
     HoldButton Right_;
 
@@ -60,7 +60,6 @@ public:
         Down_(DIGITAL_DOWN),
         Left_(DIGITAL_LEFT),
         Right_(DIGITAL_RIGHT)
-
     {
 
     }

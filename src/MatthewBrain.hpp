@@ -17,7 +17,7 @@ public:
         : Robot_(Robot), Controller_()
 
     {
-        Controller_.Down_.setValue(true);
+        Controller_.Y_.setValue(true);
     }
 
     void Tick()
@@ -29,7 +29,6 @@ public:
         //assign drivetrain values
         Robot_->DriveTrain_.SetLeftStickValue(Controller_.LeftY_.GetPosition());
         Robot_->DriveTrain_.SetRightStickValue(Controller_.RightX_.GetPosition());
-        //Robot_->DriveTrain_.SetShiftButtonValue(Controller_.R1_.IsPressed());
 
         //intake
         if (Controller_.R2_.IsPressed()) {
@@ -42,27 +41,33 @@ public:
             Robot_->Intake_.Stop();
         }
 
-        if (Controller_.Down_.IsOn()) {
+        if (Controller_.Y_.IsOn()) {
             Robot_->Intake_.SortOn();
         }
         else {
             Robot_->Intake_.SortOff();
         }
 
+        if (Controller_.R1_.IsPressed()) { 
+            Robot_->Intake_.ChangeHooksSpeed(0);
+        }
+
+        //
         //arm
+        //
         if (Controller_.Left_.IsPressed()) {
             Robot_->Arm_.Zero();
         }
 
-        if (Controller_.R1_.IsPressed()) {
-            Robot_->Arm_.ManualTakeoverSet(true);
-            Robot_->Arm_.ManualMove(Controller_.RightY_.GetPosition());
-            Robot_->Intake_.ChangeHooksSpeed(0);
-        } else {
-            Robot_->Arm_.ManualMove(0);
+        if (Controller_.Down_.WasTapped()) {
+            Robot_->Arm_.MoveDown();
         }
 
-        if (Controller_.L1_.IsPressed()) {
+        if (Controller_.Up_.WasTapped()) {
+            Robot_->Arm_.MoveUp();
+        } 
+
+        if (Controller_.L1_.IsHeld()) {
             Robot_->Arm_.SetTarget((Arm::State)(Controller_.L1_.TimesPressed() % 4));
             Robot_->Arm_.ManualTakeoverSet(false);
         }
@@ -70,6 +75,12 @@ public:
         if (Controller_.X_.IsPressed()) {
             Robot_->Arm_.SetTarget(Arm::DESCORE);
             Controller_.L1_.SetPressed(3);
+            Robot_->Arm_.ManualTakeoverSet(false);
+        }
+
+        if (Controller_.Right_.IsPressed()) {
+            Robot_->Arm_.SetTarget(Arm::DOCK);
+            Controller_.L1_.SetPressed(0);
             Robot_->Arm_.ManualTakeoverSet(false);
         }
 

@@ -23,9 +23,9 @@ extern Robot* robot;
 AutonBrain* brain;
 
 void brainTick() {
-  while (true) {
+  while (pros::competition::is_autonomous) {
     brain->Tick();
-    pros::delay(ez::util::DELAY_TIME);
+    pros::delay(ez::util::DELAY_TIME + 5);
   }
 }
 
@@ -349,6 +349,7 @@ void skills() {
 }
 
 
+#pragma region other autons
 // ///
 // // Drive Example
 // ///
@@ -374,7 +375,7 @@ void skills() {
 //     chassis.pid_wait();
 // }
 
-#pragma region other autons
+
 // /////   chassis.pid_turn_set(45_deg, TURN_SPEED);
 //   chassis.pid_wait_quick_chain();
 
