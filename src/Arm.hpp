@@ -71,27 +71,22 @@ public:
             }
         }
         else {
-            if (StickInput_ > 10 || StickInput_ < -10) {
-                Motor_.SetSpeed(StickInput_ / 2);
-            }
-            else {
-                Motor_.SetSpeed(0);
-                Motor_.SetBrakeMode(MOTOR_BRAKE_BRAKE);
-                // pid_.setTarget(RotationSensor_.GetPosition());
-                // int current_position = RotationSensor_.GetPosition();
-                // double pid_output = pid_.Calculate(current_position);
+            int current_position = RotationSensor_.GetPosition();
+            double pid_output = pid_.Calculate(current_position);
 
-                // // Use the output from PID to set motor speed
-                // Motor_.SetSpeed(pid_output);
-
-                // //THIS PROBABLY WONT WORK BECAUAUSE TIKCPSEED MIGHT BE TOO HIGH
-            }
+            // Use the output from PID to set motor speed
+            Motor_.SetSpeed(pid_output);
         }
     }
 
-    void ManualMove(int stickInput)
-    {
-        StickInput_ = stickInput;
+    void MoveUp() {
+        pid_.setTarget(RotationSensor_.GetPosition() + 15);
+        manualTakeover_ = true;
+    }
+
+    void MoveDown() {
+        pid_.setTarget(RotationSensor_.GetPosition() - 15);
+        manualTakeover_ = true;
     }
 
     void SetTarget(State state)
@@ -134,7 +129,7 @@ private:
 
     void Load()
     {
-        pid_.setTarget(33.0);
+        pid_.setTarget(30.0);
     }
 
     void Reach()
@@ -144,7 +139,7 @@ private:
 
     void Score()
     {
-        pid_.setTarget(240.0);
+        pid_.setTarget(230.0);
     }
 
     void Descore() {

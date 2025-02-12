@@ -39,7 +39,9 @@ void initialize() {
 
   ez::as::auton_selector.autons_add({
       //{"Drive\n\nDrive forward and come back", safeRed},
-      {"skills", skills},
+      {"Blue AWP", safeBlue},
+      //{"Blue AWP", blueAWP},
+      //{"skills", skills},
   });
 
   ez::as::initialize();

@@ -13,6 +13,8 @@ private:
 
     int Pressed_ = 0;
     bool dePressed_;
+    bool Tapped_ = false;
+
 public:
     TapButton(pros::controller_digital_e_t button, pros::Controller Master = master)
         : Master_(Master)
@@ -25,6 +27,9 @@ public:
         if (Master_.get_digital_new_press(Button_))
         {
             Pressed_ = Pressed_ + 1;
+            Tapped_ = true;
+        } else {
+            Tapped_ = false;
         }
         dePressed_ = Master_.get_digital(Button_);
 
@@ -34,12 +39,16 @@ public:
     {
         return Pressed_;
     }
-    bool IsPressed()
+    bool IsHeld()
     {
         return dePressed_;
     }
     void SetPressed(int pressedSet) {
         Pressed_ = pressedSet;
+    }
+
+    bool WasTapped() {
+        return Tapped_;
     }
 };
 #endif // TAPBUTTON_HPP

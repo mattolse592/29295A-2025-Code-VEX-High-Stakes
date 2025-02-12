@@ -2,6 +2,7 @@
 
 void default_constants();
 
+void blueAWP();
 void test_code();
 void drive_example();
 void safeBlue();
