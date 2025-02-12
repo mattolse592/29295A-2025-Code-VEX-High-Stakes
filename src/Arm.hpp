@@ -129,7 +129,7 @@ private:
 
     void Load()
     {
-        pid_.setTarget(33.0);
+        pid_.setTarget(30.0);
     }
 
     void Reach()

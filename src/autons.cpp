@@ -32,6 +32,57 @@ void brainTick() {
 //
 //  Autonomous testing, can delete 
 //
+
+void blueAWP() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(false);
+  ch->slew_drive_set(true);
+
+  //load ring into lb
+  brain->armPos = Arm::LOAD;
+  brain->intakeOn = true;
+  //drive forward
+  ch->pid_drive_set(5, 50);
+  ch->pid_wait();
+  pros::delay(350);
+  //score on alliance stake
+  brain->intakeOn = false;
+  brain->armPos = Arm::SCORE;
+  pros::delay(800);
+  //drive backwards to line up with mogo
+  ch->pid_drive_set(-16, DRIVE_SPEED);
+  pros::delay(100);
+  brain->armPos = Arm::DOCK;
+  ch->pid_wait();
+  //drive into mogo
+  ch->pid_turn_set(-47, TURN_SPEED);
+  ch->pid_wait();
+  ch->pid_drive_set(-11, 50);
+  ch->pid_wait_quick_chain();
+  //clamp mogo
+  brain->mogoOn = true;
+  pros::delay(350);
+  //turn towards ring stack
+  ch->pid_turn_set(-145, TURN_SPEED);
+  ch->pid_wait();
+  //intake ring
+  brain->intakeOn = true;
+  ch->pid_drive_set(24, DRIVE_SPEED);
+  ch->pid_wait();
+  pros::delay(500);
+  //turn towards middle ring stack
+  ch->pid_turn_set(-115, TURN_SPEED);
+  ch->pid_wait();
+  ch->pid_drive_set(-72, DRIVE_SPEED);
+  ch->pid_wait();
+  brain->intakeOn = false;
+
+
+
+}
+
 void safeBlue() {
 
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
@@ -66,31 +117,43 @@ void safeBlue() {
   brain->intakeOn = true;
   ch->pid_drive_set(21, 75);
   ch->pid_wait_quick_chain();
-  ch->pid_turn_set(-145, TURN_SPEED);
+
+  //move towards middle ring stack going forwrd
+  ch->pid_turn_set(-335, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(-72, DRIVE_SPEED);
+  ch->pid_drive_set(42, DRIVE_SPEED);
+  ch->pid_wait();
+  ch->pid_drive_set(44, 80);
   ch->pid_wait();
 
-  //grabs next mogo
+  //drops the mogo
+  pros::delay(800);
   brain->mogoOn = false;
   brain->intakeOn = false;
-  pros::delay(50);
-  ch->pid_drive_set(2.5, DRIVE_SPEED);
+  
+  //move towards second mogo
+  ch->pid_turn_set(-35, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_turn_set(-80, TURN_SPEED);
+  ch->pid_drive_set(-27, 70);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(-19, 45);
-  ch->pid_wait_quick_chain();
+
+  //grabs mogo
   brain->mogoOn = true;
   pros::delay(100);
+
+  //moves towards rings
   ch->pid_turn_set(40, TURN_SPEED);
   ch->pid_wait_quick_chain();
+
+  //grabs rings
   brain->intakeOn = true;
-  ch->pid_drive_set(26, 50);
+  ch->pid_drive_set(30, 60);
   ch->pid_wait_quick_chain();
   ch->pid_turn_set(-140, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(40, DRIVE_SPEED);
+
+  //drives into stake
+  ch->pid_drive_set(44, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
 
 }

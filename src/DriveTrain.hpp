@@ -20,7 +20,7 @@ public:
 private:
     void default_constants() {
         // P, I, D, and Start I
-        Chassis_.pid_drive_constants_set(137.0, 0.0, 90.0);         // Fwd/rev constants, used for odom and non odom motions
+        Chassis_.pid_drive_constants_set(137.0, 0.0, 80.0);         // Fwd/rev constants, used for odom and non odom motions
         Chassis_.pid_heading_constants_set(10, 0.0, 45);        // Holds the robot straight while going forward without odom
         Chassis_.pid_turn_constants_set(5.0, 0.0, 30.5, 0.0);     // Turn in place constants
         Chassis_.pid_swing_constants_set(6.0, 0.0, 65.0);      //6.0 , 0.0, 65,0     // Swing constants
