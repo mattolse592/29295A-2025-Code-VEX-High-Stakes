@@ -38,8 +38,7 @@ void initialize() {
   // // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.autons_add({
-      //{"Drive\n\nDrive forward and come back", safeRed},
-      {"Blue AWP", safeBlue},
+      {"red AWP", redAWP},
       //{"Blue AWP", blueAWP},
       //{"skills", skills},
   });

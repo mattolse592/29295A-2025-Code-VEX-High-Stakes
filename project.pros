@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "blue AWP Junior",
+    "project_name": "red AWP",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -424,7 +424,7 @@
       }
     },
     "upload_options": {
-      "description": "bark",
+      "description": "fark",
       "slot": 1,
       "after": "screen",
       "icon": "pizza"

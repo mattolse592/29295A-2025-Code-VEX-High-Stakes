@@ -139,7 +139,7 @@ private:
 
     void Score()
     {
-        pid_.setTarget(230.0);
+        pid_.setTarget(235.0);
     }
 
     void Descore() {
