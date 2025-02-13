@@ -66,6 +66,11 @@ public:
         if (Controller_.Up_.WasTapped()) {
             Robot_->Arm_.MoveUp();
         } 
+        
+        if (Controller_.Right_.IsPressed()) {
+            Controller_.L1_.SetPressed(1);
+            Robot_->Arm_.ManualTakeoverSet(false);
+        }
 
         if (Controller_.L1_.IsHeld()) {
             Robot_->Arm_.SetTarget((Arm::State)(Controller_.L1_.TimesPressed() % 4));
@@ -78,11 +83,7 @@ public:
             Robot_->Arm_.ManualTakeoverSet(false);
         }
 
-        if (Controller_.Right_.IsPressed()) {
-            Robot_->Arm_.SetTarget(Arm::DOCK);
-            Controller_.L1_.SetPressed(0);
-            Robot_->Arm_.ManualTakeoverSet(false);
-        }
+        
 
         //pistons
         if (Controller_.A_.IsOn()) {

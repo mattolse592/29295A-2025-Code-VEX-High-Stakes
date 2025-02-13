@@ -80,12 +80,12 @@ public:
     }
 
     void MoveUp() {
-        pid_.setTarget(RotationSensor_.GetPosition() + 15);
+        pid_.setTarget(RotationSensor_.GetPosition() - 10);
         manualTakeover_ = true;
     }
 
     void MoveDown() {
-        pid_.setTarget(RotationSensor_.GetPosition() - 15);
+        pid_.setTarget(RotationSensor_.GetPosition() + 10);
         manualTakeover_ = true;
     }
 
