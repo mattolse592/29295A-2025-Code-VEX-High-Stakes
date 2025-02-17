@@ -38,9 +38,9 @@ void initialize() {
   // // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.autons_add({
-      {"red AWP", redAWP},
+      //{"red AWP", redAWP},
       //{"Blue AWP", blueAWP},
-      //{"skills", skills},
+      {"skills", skills},
   });
 
   ez::as::initialize();

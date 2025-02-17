@@ -69,6 +69,7 @@ public:
         
         if (Controller_.Right_.IsPressed()) {
             Controller_.L1_.SetPressed(1);
+            Robot_->Arm_.SetTarget((Arm::State)(Controller_.L1_.TimesPressed() % 4));
             Robot_->Arm_.ManualTakeoverSet(false);
         }
 

@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "red AWP",
+    "project_name": "skills",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,7 +425,7 @@
     },
     "upload_options": {
       "description": "fark",
-      "slot": 1,
+      "slot": 3,
       "after": "screen",
       "icon": "pizza"
     },

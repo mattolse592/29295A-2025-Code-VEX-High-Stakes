@@ -29,9 +29,7 @@ void brainTick() {
   }
 }
 
-//
 //  Autonomous testing, can delete 
-//
 
 /*
 void blueAWP() {
@@ -230,6 +228,37 @@ void redAWP() {
   ch->pid_wait_quick_chain();
   ch->pid_drive_set(41, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
+}
+
+void blueSafe() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(false);
+  ch->slew_drive_set(true);
+
+  //rush the rings
+  ch->drive_angle_set(30_deg);
+  ch->pid_drive_set(75, 125, false);
+  brain->doinkerOn = true;
+  brain->intakeOn = true;
+  ch->pid_wait();
+  brain->intakeOn = false;
+  //pull the rings back
+  ch->pid_drive_set(-14, DRIVE_SPEED);
+  ch->pid_wait();
+  brain->doinkerOn = false;
+  //turn into mogo
+  ch->pid_turn_set(90_deg, TURN_SPEED);
+  ch->pid_wait();
+  ch->pid_drive_set(-5, 50);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = true;
+  pros::delay(200);
+  //grab rings
+
+
+
 }
 
 void skills() {
