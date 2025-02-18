@@ -5,7 +5,7 @@
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
-// https://ez-robotics.github.io/EZ-Template/
+// https://ez-robotics.github.io/EZ-Template/       Version 3.2.2
 /////
 
 // These are out of 127
@@ -16,8 +16,6 @@ const int SWING_SPEED = 110;
 ///
 // Constants
 ///
-
-
 
 extern Robot* robot;
 AutonBrain* brain;
@@ -230,7 +228,7 @@ void redAWP() {
   ch->pid_wait_quick_chain();
 }
 
-void blueSafe() {
+void blueRingRushElim() {
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
   brain = new AutonBrain(robot);
   pros::Task tickTask(brainTick);
@@ -239,26 +237,56 @@ void blueSafe() {
 
   //rush the rings
   ch->drive_angle_set(30_deg);
-  ch->pid_drive_set(75, 125, false);
+  ch->pid_drive_set(50, 125, false);
   brain->doinkerOn = true;
   brain->intakeOn = true;
   ch->pid_wait();
   brain->intakeOn = false;
+
   //pull the rings back
-  ch->pid_drive_set(-14, DRIVE_SPEED);
-  ch->pid_wait();
+  ch->pid_drive_set(-26.5, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
   brain->doinkerOn = false;
+
   //turn into mogo
-  ch->pid_turn_set(90_deg, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(-5, 50);
+  ch->pid_turn_set(135_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-7, 70);
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
   pros::delay(200);
+
   //grab rings
+  brain->intakeOn = true;
+  ch->pid_turn_set(80_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(20, DRIVE_SPEED - 20);
+  ch->pid_wait();
 
+  //grab preload
+  ch->pid_turn_set(225_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(51, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->armPos = Arm::LOAD;
+  ch->pid_wait();
 
+  //score on alliance stake
+  pros::delay(1000);
+  brain->intakeOn = false;
+  brain->armPos = Arm::SCORE;
+  pros::delay(400);
 
+  //back up to get middle stack
+  ch->pid_drive_set(-16, DRIVE_SPEED);
+  ch->pid_wait();
+  brain->intakeOn = true;
+  //drive to pos corner
+  ch->pid_turn_set(-110_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(80, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->doinkerOn = true;
 }
 
 void skills() {
