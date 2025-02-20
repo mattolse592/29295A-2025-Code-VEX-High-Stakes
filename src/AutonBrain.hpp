@@ -2,7 +2,7 @@
 #define AUTONBRAIN_HPP
 
 #include "Robot.hpp"
-
+#include "LimitSwitch.hpp"
 
 class AutonBrain
 {
@@ -10,10 +10,11 @@ class AutonBrain
 private:
 
     Robot* Robot_;
+    LimitSwitch LimSwitch_;
    
 public:
     AutonBrain(Robot* Robot)
-        : Robot_(Robot)
+        : Robot_(Robot), LimSwitch_('B')
     {
 
     }
@@ -26,12 +27,19 @@ public:
 
     void Tick()
     {
+        LimSwitch_.Tick();
+
         Robot_->InputTick();
         
         Robot_->Arm_.SetTarget(armPos);
         
         if (intakeOn) {
-            Robot_->Intake_.Forward();
+            if (!mogoOn && LimSwitch_.GetValue()) {
+                Robot_->Intake_.Stop();
+            }
+            else {
+                Robot_->Intake_.Forward();
+            }
         }
         else {
             Robot_->Intake_.Stop();
