@@ -30,7 +30,7 @@ public:
         Preroller_.SetSpeed(PreRollerSpeed_);
         Hooks_.SetSpeed(HooksSpeed_);
 
-        if (RingDetector_.GetReverseTimer() > 0 || Hooks_.GetReverseTimer() > 0) {
+        if (RingDetector_.GetReverseTimer() > 0) {
             Hooks_.SetSpeed(127);
         }
     }

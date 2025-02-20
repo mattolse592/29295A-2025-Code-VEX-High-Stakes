@@ -8,7 +8,6 @@ class Motor
 
 private:
     int MotorSpeed_;
-    int reverseTimer = 0;
     pros::Motor Motor_;
 
 public:
@@ -18,16 +17,8 @@ public:
     }
 
     void Tick() {
-        if (Motor_.get_target_velocity() - Motor_.get_actual_velocity() > 30) {
-            reverseTimer = 30;
-        }
-        reverseTimer--;
+        
     }
-
-    int GetReverseTimer() {
-        return reverseTimer;
-    }
-
 
     void SetSpeed(int motorSpeed) {
         // values from -127 to 127
