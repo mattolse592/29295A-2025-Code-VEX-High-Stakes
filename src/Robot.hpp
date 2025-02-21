@@ -14,6 +14,8 @@ class Robot
 public:
     Pistonf Mogo_;
     Pistonf Doinker_;
+    Pistonf rushArm_;
+    Pistonf rushClamp_;
 
     Intake Intake_;
 
@@ -25,7 +27,9 @@ public:
     Robot()
         : Mogo_('A'),
           Doinker_('D'),
-          Intake_(Motor(20), Motor(-18)),
+          rushArm_('E'),
+          rushClamp_('C'),
+          Intake_(Motor(-20), Motor(-18)),
           Arm_(Motor(-13), RotationSensor(15)),
           DriveTrain_()
 

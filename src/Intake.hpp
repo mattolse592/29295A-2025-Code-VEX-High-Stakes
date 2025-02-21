@@ -15,6 +15,7 @@ private:
 
     int PreRollerSpeed_;
     int HooksSpeed_;
+    bool ArmIsDocked_ = false;
 
 public:
     Intake(Motor Preroller, Motor Hooks)
@@ -24,14 +25,21 @@ public:
 
     void InputTick() {
         RingDetector_.Tick();
+        Hooks_.Tick();
     }
 
     void OutputTick() {
         Preroller_.SetSpeed(PreRollerSpeed_);
-        Hooks_.SetSpeed(HooksSpeed_);
+
 
         if (RingDetector_.GetReverseTimer() > 0 || Hooks_.GetReverseTimer() > 0) {
-            Hooks_.SetSpeed(127);
+            if (ArmIsDocked_) {
+                Hooks_.SetSpeed(127);
+            }
+
+        }
+        else {
+            Hooks_.SetSpeed(HooksSpeed_);
         }
     }
 
@@ -73,6 +81,10 @@ public:
 
     void SetAllianceAsRed(bool isRed) {
         RingDetector_.SetAllianceAsRed(isRed);
+    }
+
+    void SetArmDocked(bool ArmIsDocked) {
+        ArmIsDocked_ = ArmIsDocked;
     }
 
 };

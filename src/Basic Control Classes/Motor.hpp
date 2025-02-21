@@ -8,7 +8,8 @@ class Motor
 
 private:
     int MotorSpeed_;
-    int reverseTimer = 0;
+    int ReverseTimer_ = 0;
+    int StalledTimer_ = 0;
     pros::Motor Motor_;
 
 public:
@@ -18,14 +19,19 @@ public:
     }
 
     void Tick() {
-        if (Motor_.get_target_velocity() - Motor_.get_actual_velocity() > 30) {
-            reverseTimer = 30;
+        if (std::abs(Motor_.get_actual_velocity()) / 1.5 < 10 && std::abs(MotorSpeed_) > 50) {
+            StalledTimer_++;
         }
-        reverseTimer--;
+
+        if (StalledTimer_ > 40 && pros::competition::is_autonomous) {
+            ReverseTimer_ = 18;
+            StalledTimer_ = 0;
+        }
+        ReverseTimer_--;
     }
 
     int GetReverseTimer() {
-        return reverseTimer;
+        return ReverseTimer_;
     }
 
 

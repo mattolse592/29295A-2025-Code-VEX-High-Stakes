@@ -2,7 +2,7 @@
 #define AUTONBRAIN_HPP
 
 #include "Robot.hpp"
-#include "LimitSwitch.hpp"
+#include "Basic Control Classes/LimitSwitch.hpp"
 
 class AutonBrain
 {
@@ -33,13 +33,15 @@ public:
         
         Robot_->Arm_.SetTarget(armPos);
         
+        if (armPos == Arm::DOCK) {
+            Robot_->Intake_.SetArmDocked(true);
+        }
+        else {
+            Robot_->Intake_.SetArmDocked(false);
+        }
+
         if (intakeOn) {
-            if (!mogoOn && LimSwitch_.GetValue()) {
-                Robot_->Intake_.Stop();
-            }
-            else {
-                Robot_->Intake_.Forward();
-            }
+            Robot_->Intake_.Forward();
         }
         else {
             Robot_->Intake_.Stop();
