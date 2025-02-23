@@ -21,6 +21,8 @@ public:
     Intake(Motor Preroller, Motor Hooks)
         : Preroller_(Preroller), Hooks_(Hooks)
     {
+        Hooks_.SetBrakeMode(MOTOR_BRAKE_BRAKE);
+        ArmIsDocked_ = true;
     }
 
     void InputTick() {
@@ -31,12 +33,10 @@ public:
     void OutputTick() {
         Preroller_.SetSpeed(PreRollerSpeed_);
 
-
         if (RingDetector_.GetReverseTimer() > 0 || Hooks_.GetReverseTimer() > 0) {
             if (ArmIsDocked_) {
                 Hooks_.SetSpeed(127);
             }
-
         }
         else {
             Hooks_.SetSpeed(HooksSpeed_);

@@ -23,7 +23,7 @@ public:
             StalledTimer_++;
         }
 
-        if (StalledTimer_ > 40 && pros::competition::is_autonomous) {
+        if (StalledTimer_ > 30 && pros::competition::is_autonomous) {
             ReverseTimer_ = 18;
             StalledTimer_ = 0;
         }
