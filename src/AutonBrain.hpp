@@ -23,7 +23,9 @@ public:
     bool intakeOn = false;
     bool mogoOn = false;
     bool doinkerOn = false;
-
+    bool rushClampOn = false;
+    bool rushArmOn = false;
+    bool rollerOnly = false;
 
     void Tick()
     {
@@ -41,7 +43,12 @@ public:
         }
 
         if (intakeOn) {
-            Robot_->Intake_.Forward();
+            if(rollerOnly) {
+                Robot_->Intake_.PreRollForward();
+            }
+            else {
+                Robot_->Intake_.Forward();
+            }
         }
         else {
             Robot_->Intake_.Stop();
@@ -59,6 +66,20 @@ public:
         }
         else {
             Robot_->Doinker_.Deactivate();
+        }
+
+        if (rushClampOn) {
+            Robot_->rushClamp_.Activate();
+        }
+        else {
+            Robot_->rushClamp_.Deactivate();
+        }
+
+        if (rushArmOn) {
+            Robot_->rushArm_.Activate();
+        }
+        else {
+            Robot_->rushArm_.Deactivate();
         }
 
         Robot_->AutonOutputTick();

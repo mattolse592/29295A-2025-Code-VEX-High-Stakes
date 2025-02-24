@@ -23,7 +23,8 @@ public:
         REACH = 2,
         SCORE = 3,
         DESCORE = 4,
-        MANUAL = 5
+        MANUAL = 5,
+        REMOTE = 6
     };
 
 private:
@@ -66,6 +67,9 @@ public:
             case DESCORE:
                 Descore();
                 break;
+            case REMOTE:
+            Remote();
+            break;
             default:
                 break;
             }
@@ -144,6 +148,10 @@ private:
 
     void Descore() {
         pid_.setTarget(160.0);
+    }
+
+    void Remote() {
+        pid_.setTarget(90.0);
     }
 #pragma endregion
 };

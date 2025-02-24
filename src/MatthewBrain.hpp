@@ -24,21 +24,22 @@ public:
 
     {
         Controller_.Y_.setValue(true);
+        Robot_->Intake_.SetArmDocked(false);
 
-        //initialize the robot to your starting state
-        Robot_->Mogo_.Deactivate();
-        Robot_->Doinker_.Deactivate();
-        Robot_->rushArm_.Deactivate();
-        Robot_->rushClamp_.Deactivate();
+        // //initialize the robot to your starting state
+        // Robot_->Mogo_.Deactivate();
+        // Robot_->Doinker_.Deactivate();
+        // Robot_->rushArm_.Deactivate();
+        // Robot_->rushClamp_.Deactivate();
 
-        Robot_->Intake_.Stop();
-        Robot_->Arm_.Zero();
+        // Robot_->Intake_.Stop();
+        // Robot_->Arm_.Zero();
 
-        // turn off slew
-        Robot->DriveTrain_.DriveTrain_.Chassis_.slew_drive_set(false);
+        // // turn off slew
+        // Robot->DriveTrain_.DriveTrain_.Chassis_.slew_drive_set(false);
 
-        //turn off drive pid
-        Robot_->DriveTrain_.DriveTrain_.Chassis_.pid_targets_reset();
+        // //turn off drive pid
+        // Robot_->DriveTrain_.DriveTrain_.Chassis_.pid_targets_reset();
 
 
     }

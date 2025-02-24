@@ -55,6 +55,18 @@ public:
         HooksSpeed_ = 127;
     }
 
+    void HooksReverse()
+    {
+        PreRollerSpeed_ = 127;
+        HooksSpeed_ = 127;
+    }
+
+    void PreRollForward() 
+    {
+        PreRollerSpeed_ = 127;
+        HooksSpeed_ = 0;
+    }
+
     void Stop()
     {
         PreRollerSpeed_ = 0;
