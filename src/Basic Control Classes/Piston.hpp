@@ -23,5 +23,9 @@ public:
     void Deactivate() {
         Port_.set_value(false);
     }
+
+    void SetValue(bool value) {
+        Port_.set_value(value);
+    }
 };
 #endif  // PISTON_HPP

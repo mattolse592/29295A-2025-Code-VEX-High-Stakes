@@ -2,7 +2,7 @@
 #define AUTONBRAIN_HPP
 
 #include "Robot.hpp"
-#include "LimitSwitch.hpp"
+#include "Basic Control Classes/LimitSwitch.hpp"
 
 class AutonBrain
 {
@@ -23,7 +23,9 @@ public:
     bool intakeOn = false;
     bool mogoOn = false;
     bool doinkerOn = false;
-
+    bool rushClampOn = false;
+    bool rushArmOn = false;
+    bool rollerOnly = false;
 
     void Tick()
     {
@@ -33,9 +35,16 @@ public:
         
         Robot_->Arm_.SetTarget(armPos);
         
+        if (armPos == Arm::DOCK) {
+            Robot_->Intake_.SetArmDocked(true);
+        }
+        else {
+            Robot_->Intake_.SetArmDocked(false);
+        }
+
         if (intakeOn) {
-            if (!mogoOn && LimSwitch_.GetValue()) {
-                Robot_->Intake_.Stop();
+            if(rollerOnly) {
+                Robot_->Intake_.PreRollForward();
             }
             else {
                 Robot_->Intake_.Forward();
@@ -57,6 +66,20 @@ public:
         }
         else {
             Robot_->Doinker_.Deactivate();
+        }
+
+        if (rushClampOn) {
+            Robot_->rushClamp_.Activate();
+        }
+        else {
+            Robot_->rushClamp_.Deactivate();
+        }
+
+        if (rushArmOn) {
+            Robot_->rushArm_.Activate();
+        }
+        else {
+            Robot_->rushArm_.Deactivate();
         }
 
         Robot_->AutonOutputTick();

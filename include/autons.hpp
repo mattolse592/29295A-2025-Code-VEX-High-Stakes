@@ -2,15 +2,14 @@
 
 void default_constants();
 
-void blueAWP();
-void test_code();
-void drive_example();
-void safeBlue();
-void safeRed();
+void blueAWP(); // Blue AWP. Ring on alliance, Two rings on one mogo, one on the other, ends with touching the bar
+void redAWP(); // Red AWP. Ring on alliance, Two rings on one mogo, one on the other, ends with touching the bar
+void redMogoRush();
 void skills();
 
-
-
+void safeBlue();
+void test_code();
+void drive_example();
 void turn_example();
 void drive_and_turn();
 void wait_until_change_speed();

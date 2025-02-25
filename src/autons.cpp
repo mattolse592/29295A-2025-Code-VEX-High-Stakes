@@ -5,7 +5,7 @@
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
-// https://ez-robotics.github.io/EZ-Template/
+// https://ez-robotics.github.io/EZ-Template/       Version 3.2.2
 /////
 
 // These are out of 127
@@ -17,8 +17,6 @@ const int SWING_SPEED = 110;
 // Constants
 ///
 
-
-
 extern Robot* robot;
 AutonBrain* brain;
 
@@ -27,12 +25,12 @@ void brainTick() {
     brain->Tick();
     pros::delay(ez::util::DELAY_TIME + 5);
   }
+  master.rumble("-------");
 }
 
-//
 //  Autonomous testing, can delete 
-//
 
+/*
 void blueAWP() {
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
   brain = new AutonBrain(robot);
@@ -78,12 +76,9 @@ void blueAWP() {
   ch->pid_drive_set(-72, DRIVE_SPEED);
   ch->pid_wait();
   brain->intakeOn = false;
+} */
 
-
-
-}
-
-void safeBlue() {
+void blueAWP() {
 
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
   brain = new AutonBrain(robot);
@@ -130,7 +125,7 @@ void safeBlue() {
   pros::delay(800);
   brain->mogoOn = false;
   brain->intakeOn = false;
-  
+
   //move towards second mogo
   ch->pid_turn_set(-35, TURN_SPEED);
   ch->pid_wait_quick_chain();
@@ -158,8 +153,7 @@ void safeBlue() {
 
 }
 
-void safeRed() {
-
+void redAWP() {
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
   brain = new AutonBrain(robot);
   pros::Task tickTask(brainTick);
@@ -169,59 +163,135 @@ void safeRed() {
   //move forward and score on alliance stake
   brain->armPos = Arm::LOAD;
   brain->intakeOn = true;
-  pros::delay(550);
-  ch->pid_drive_set(4, 50);
+  pros::delay(500);
+  ch->pid_drive_set(5, 50);
   brain->intakeOn = false;
   brain->armPos = Arm::SCORE;
-  pros::delay(700);
+  pros::delay(1000);
 
   //move back into mogo
+
+  ch->pid_drive_set(-10.5, 75);
+  pros::delay(100);
   brain->armPos = Arm::DOCK;
-  ch->pid_drive_set(-11, 75);
   ch->pid_wait_quick_chain();
+
   ch->pid_turn_set(45, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(-18, 60);
+  ch->pid_drive_set(-18.5, 60);
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
   pros::delay(90);
 
-  //move towards ring stack
-  ch->pid_turn_set(115, TURN_SPEED);
+  //move to ring stack
+  ch->pid_turn_set(130, TURN_SPEED);
   ch->pid_wait_quick_chain();
   brain->intakeOn = true;
-  ch->pid_drive_set(22.5, 75);
+  ch->pid_drive_set(22, 75);
   ch->pid_wait_quick_chain();
-  ch->pid_turn_set(145, TURN_SPEED);
-  ch->pid_wait_quick_chain();
-  ch->pid_drive_set(-73, DRIVE_SPEED);
-  ch->pid_wait();
 
-  //grabs next mogo
+  //turn towards middle stack
+  ch->pid_turn_set(-15, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(48, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //align with wall and get the ring
+  ch->pid_turn_set(-45, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(30, 80);
+  ch->pid_wait();
+  pros::delay(1000);
+
+  //drop mogo
   brain->mogoOn = false;
   brain->intakeOn = false;
   pros::delay(50);
+  //turn towards next mogo
   ch->pid_drive_set(2.5, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_turn_set(80, TURN_SPEED);
+  ch->pid_turn_set(30, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(-19, 45);
+  //driuve into mogo
+  ch->pid_drive_set(-18, 60);
   ch->pid_wait_quick_chain();
+  pros::delay(50);
   brain->mogoOn = true;
   pros::delay(150);
-  ch->pid_turn_set(-40, TURN_SPEED);
+  ch->pid_turn_set(-45, TURN_SPEED);
   ch->pid_wait_quick_chain();
   brain->intakeOn = true;
   ch->pid_drive_set(26, 50);
   ch->pid_wait_quick_chain();
   ch->pid_turn_set(140, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(40, DRIVE_SPEED);
+  ch->pid_drive_set(41, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
 }
 
+void blueRingRushElim() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(false);
+  ch->slew_drive_set(true);
+
+  //rush the rings
+  ch->drive_angle_set(30_deg);
+  ch->pid_drive_set(50, 125, false);
+  brain->doinkerOn = true;
+  brain->intakeOn = true;
+  ch->pid_wait();
+  brain->intakeOn = false;
+
+  //pull the rings back
+  ch->pid_drive_set(-26.5, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->doinkerOn = false;
+
+  //turn into mogo
+  ch->pid_turn_set(135_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-7, 70);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = true;
+  pros::delay(200);
+
+  //grab rings
+  brain->intakeOn = true;
+  ch->pid_turn_set(80_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(20, DRIVE_SPEED - 20);
+  ch->pid_wait();
+
+  //grab preload
+  ch->pid_turn_set(225_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(51, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->armPos = Arm::LOAD;
+  ch->pid_wait();
+
+  //score on alliance stake
+  pros::delay(1000);
+  brain->intakeOn = false;
+  brain->armPos = Arm::SCORE;
+  pros::delay(400);
+
+  //back up to get middle stack
+  ch->pid_drive_set(-16, DRIVE_SPEED);
+  ch->pid_wait();
+  brain->intakeOn = true;
+  //drive to pos corner
+  ch->pid_turn_set(-110_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(80, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->doinkerOn = true;
+}
+
 void skills() {
-  DRIVE_SPEED = 80;
+  DRIVE_SPEED = 90;
 
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
   brain = new AutonBrain(robot);
@@ -230,187 +300,367 @@ void skills() {
   ch->slew_drive_set(true);
 
   // score on stake
-  brain->armPos = Arm::LOAD;
-  pros::delay(200);
+  brain->mogoOn = true;
   brain->intakeOn = true;
-  pros::delay(500);
-  brain->intakeOn = false;
-  brain->armPos = Arm::SCORE;
-  pros::delay(700);
-  brain->armPos = Arm::DOCK;
-  ch->pid_drive_set(-6.5, 75);
-  ch->pid_wait();
+  ch->pid_drive_set(-1, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  pros::delay(230);
+  ch->pid_drive_set(9, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+
+  brain->mogoOn = false;
 
   //drive into 1st mogo 
-  ch->pid_turn_set(90, TURN_SPEED);
+  ch->pid_turn_set(-90, TURN_SPEED);
   ch->pid_wait();
   ch->pid_drive_set(-19.6, 60);
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
   brain->intakeOn = true;
-  pros::delay(550);
+  pros::delay(250);
 
-  // drive to 1st ring
-  ch->pid_turn_set(180, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(25, DRIVE_SPEED - 30);
-  ch->pid_wait();
-
-  // drive to second ring
-  ch->pid_turn_set(270, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(28, DRIVE_SPEED - 30);
-  ch->pid_wait();
-
-  // drive to wall stake
-  ch->pid_turn_set(180, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(19, DRIVE_SPEED - 30);
-  ch->pid_wait();
-
-  //score on wall stake 
-  brain->armPos = Arm::LOAD;
-  ch->pid_turn_set(270, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(4, DRIVE_SPEED);
-  ch->pid_wait();
-  pros::delay(800);
-  brain->intakeOn = false;
-  brain->armPos = Arm::SCORE;
-  pros::delay(900);
-  //back away from wall stake
-  ch->pid_drive_set(-12, DRIVE_SPEED);
-  ch->pid_wait();
-
-  // drives to corner rings
-  brain->armPos = Arm::DOCK;
-  brain->intakeOn = true;
+  //drives to first ring and scores
   ch->pid_turn_set(0, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(24, DRIVE_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(35, DRIVE_SPEED - 40);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(14, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
 
-  //back up and get third ring
-  ch->pid_drive_set(-1, DRIVE_SPEED);
+  //drives to next ring and loads it
+  ch->pid_turn_set(25, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_turn_set(-150, TURN_SPEED - 20);
-  ch->pid_wait();
-  ch->pid_drive_set(16, DRIVE_SPEED - 20);
-  ch->pid_wait();
+  ch->pid_drive_set(54.3, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->armPos = Arm::LOAD;
 
-  //put mogo in corner
-  ch->pid_turn_set(169, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(-19, DRIVE_SPEED);
-  ch->pid_wait();
-  pros::delay(500);
+  //drives and scores wallstake
+  ch->pid_drive_set(-22.5, 60);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(90, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->intakeOn = false;
+  brain->armPos = Arm::REMOTE;
+  ch->pid_drive_set(20, 60);
+  ch->pid_wait_quick_chain();
+  brain->intakeOn = true;
+  brain->armPos = Arm::SCORE;
+  pros::delay(150);
 
+  //gets corners rings 
+  ch->pid_drive_set(-6.3, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->armPos = Arm::DOCK;
+  ch->pid_turn_set(180, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(20, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(40, 45);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-10.6, DRIVE_SPEED);
+  ch->pid_wait();
+  ch->pid_turn_set(78, 70);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(11, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //puts mogo into corner
+  ch->pid_drive_set(-9.3, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(-55, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-26.5, DRIVE_SPEED - 20);
+  ch->pid_wait();
   brain->mogoOn = false;
-  pros::delay(300);
 
-  //drive to 2nd mogo
-  ch->pid_drive_set(4.5, DRIVE_SPEED);
+  //drives to next corner
+  ch->pid_drive_set(13, DRIVE_SPEED);
   ch->pid_wait();
-  ch->pid_turn_set(269, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(-50, DRIVE_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(-27, DRIVE_SPEED - 40);
+  ch->pid_turn_set(0, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->armPos = Arm::LOAD;
+  ch->pid_drive_set(76, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(15, 40);
+  ch->pid_wait_quick_chain();
+
+  //grabs next mogo
+  ch->pid_turn_set(115, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-22.5, 55);
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
-  pros::delay(500);
+  pros::delay(550);
 
-  // drive to 1st ring
-  ch->pid_turn_set(180, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(18, DRIVE_SPEED);
-  ch->pid_wait();
+ //puts mogo in corner
+  ch->pid_turn_set(245, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = false;
+  ch->pid_drive_set(-35, 90);
+  ch->pid_wait_quick_chain();
 
-  // drive to 2nd 
-  ch->pid_turn_set(90, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(23, DRIVE_SPEED);
-  ch->pid_wait();
-
-  // drive to wall stake
-  ch->pid_turn_set(135, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(28, DRIVE_SPEED);
-  ch->pid_wait();
-  ch->pid_turn_set(90, TURN_SPEED);
-  ch->pid_wait();
-
-
-  //score on wall stake
-  brain->armPos = Arm::LOAD;
-  ch->pid_drive_set(10, DRIVE_SPEED);
-  ch->pid_wait();
-  pros::delay(1100);
+  //grabs mogo
+  ch->pid_drive_set(27.5, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
   brain->intakeOn = false;
-  brain->armPos = Arm::SCORE;
-  pros::delay(900);
-  //back away from wall stake
-  ch->pid_drive_set(-14, DRIVE_SPEED);
-  ch->pid_wait();
+  brain->armPos = Arm::REMOTE;
+  ch->pid_turn_set(86, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-24, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = true;
+  pros::delay(550);
+  ch->pid_drive_set(6, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
 
-  //drive to corner rings
+  //scores on stake
+  ch->pid_turn_set(0, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(15, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(0.5, DRIVE_SPEED - 30);
+  ch->pid_wait();
+  ch->pid_drive_set(-10, DRIVE_SPEED - 20);
+  ch->pid_wait();
+  brain->armPos = Arm::SCORE;
+  pros::delay(1000);
+  
+
+  //drives to next ring
+  ch->pid_drive_set(-2, DRIVE_SPEED - 20);
+  ch->pid_wait_quick_chain();
   brain->armPos = Arm::DOCK;
   brain->intakeOn = true;
-  ch->pid_turn_set(0, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(24, DRIVE_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(35, DRIVE_SPEED - 40);
-  ch->pid_wait();
-
-  //back up and get third ring
-  ch->pid_drive_set(-1, DRIVE_SPEED);
+  ch->pid_turn_set(125, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_turn_set(150, TURN_SPEED - 20);
-  ch->pid_wait();
-  ch->pid_drive_set(15, DRIVE_SPEED);
-  ch->pid_wait();
-
-  //put mogo in corner
-  ch->pid_turn_set(-169, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(-20, DRIVE_SPEED);
-  ch->pid_wait();
-
-  pros::delay(5000);
-  brain->mogoOn = false;
-  brain->intakeOn = false;
-
-  //surprise
-  ch->pid_turn_set(180, TURN_SPEED);
-  ch->pid_wait();
-  brain->intakeOn = true;
-  brain->armPos = Arm::LOAD;
-  ch->pid_drive_set(70, DRIVE_SPEED + 20);
-  ch->pid_wait();
-  ch->pid_turn_set(250, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(63, 60);
+  ch->pid_drive_set(26, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
-  brain->intakeOn = false;
+
+  
+  //drives under ladder
+
+  ch->pid_turn_set(225, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  pros::delay(500);
+  brain->rollerOnly = true;
+  ch->pid_drive_set(50, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->rollerOnly = false;
+  ch->pid_drive_set(50, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+
+  //gets corner rings
   ch->pid_turn_set(180, TURN_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(25, DRIVE_SPEED);
-  ch->pid_wait();
-  ch->pid_drive_set(-6, DRIVE_SPEED);
-  ch->pid_wait();
-  brain->armPos = Arm::SCORE;
-
-
-
-
-
-
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(10, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
 
 }
 
+void redMogoRush() {
+
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(true);
+  ch->slew_drive_set(true);
+  //rush towards center mogo
+  brain->rushArmOn = true;
+  brain->intakeOn = true;
+  ch->pid_drive_set(45, 120);
+  ch->pid_wait_quick_chain();
+  //clamp on it and back away
+  brain->rushClampOn = true;
+  brain->rushArmOn = false;
+  ch->pid_drive_set(-10, DRIVE_SPEED);
+  ch->pid_wait();
+
+}
+
+/*
+// void skills() {
+//   DRIVE_SPEED = 80;
+
+//   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+//   brain = new AutonBrain(robot);
+//   pros::Task tickTask(brainTick);
+//   brain->SetAllianceAsRed(true);
+//   ch->slew_drive_set(true);
+
+//   // score on stake
+//   brain->armPos = Arm::LOAD;
+//   pros::delay(200);
+//   brain->intakeOn = true;
+//   pros::delay(500);
+//   brain->intakeOn = false;
+//   brain->armPos = Arm::SCORE;
+//   pros::delay(700);
+//   brain->armPos = Arm::DOCK;
+//   ch->pid_drive_set(-6.5, 75);
+//   ch->pid_wait();
+
+//   //drive into 1st mogo
+//   ch->pid_turn_set(90, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(-19.6, 60);
+//   ch->pid_wait_quick_chain();
+//   brain->mogoOn = true;
+//   brain->intakeOn = true;
+//   pros::delay(550);
+
+//   // drive to 1st ring
+//   ch->pid_turn_set(180, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(25, DRIVE_SPEED - 30);
+//   ch->pid_wait();
+
+//   // drive to second ring
+//   ch->pid_turn_set(270, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(28, DRIVE_SPEED - 30);
+//   ch->pid_wait();
+
+//   // drive to wall stake
+//   ch->pid_turn_set(180, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(19, DRIVE_SPEED - 30);
+//   ch->pid_wait();
+
+//   //score on wall stake
+//   brain->armPos = Arm::LOAD;
+//   ch->pid_turn_set(270, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(4, DRIVE_SPEED);
+//   ch->pid_wait();
+//   pros::delay(800);
+//   brain->intakeOn = false;
+//   brain->armPos = Arm::SCORE;
+//   pros::delay(900);
+//   //back away from wall stake
+//   ch->pid_drive_set(-12, DRIVE_SPEED);
+//   ch->pid_wait();
+
+//   // drives to corner rings
+//   brain->armPos = Arm::DOCK;
+//   brain->intakeOn = true;
+//   ch->pid_turn_set(0, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(24, DRIVE_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(35, DRIVE_SPEED - 40);
+//   ch->pid_wait_quick_chain();
+
+//   //back up and get third ring
+//   ch->pid_drive_set(-1, DRIVE_SPEED);
+//   ch->pid_wait_quick_chain();
+//   ch->pid_turn_set(-150, TURN_SPEED - 20);
+//   ch->pid_wait();
+//   ch->pid_drive_set(16, DRIVE_SPEED - 20);
+//   ch->pid_wait();
+
+//   //put mogo in corner
+//   ch->pid_turn_set(169, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(-19, DRIVE_SPEED);
+//   ch->pid_wait();
+//   pros::delay(500);
+
+//   brain->mogoOn = false;
+//   pros::delay(300);
+
+//   //drive to 2nd mogo
+//   ch->pid_drive_set(4.5, DRIVE_SPEED);
+//   ch->pid_wait();
+//   ch->pid_turn_set(269, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(-50, DRIVE_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(-27, DRIVE_SPEED - 40);
+//   ch->pid_wait_quick_chain();
+//   brain->mogoOn = true;
+//   pros::delay(500);
+
+//   // drive to 1st ring
+//   ch->pid_turn_set(180, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(18, DRIVE_SPEED);
+//   ch->pid_wait();
+
+//   // drive to 2nd
+//   ch->pid_turn_set(90, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(23, DRIVE_SPEED);
+//   ch->pid_wait();
+
+//   // drive to wall stake
+//   ch->pid_turn_set(135, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(28, DRIVE_SPEED);
+//   ch->pid_wait();
+//   ch->pid_turn_set(90, TURN_SPEED);
+//   ch->pid_wait();
+
+
+//   //score on wall stake
+//   brain->armPos = Arm::LOAD;
+//   ch->pid_drive_set(10, DRIVE_SPEED);
+//   ch->pid_wait();
+//   pros::delay(1100);
+//   brain->intakeOn = false;
+//   brain->armPos = Arm::SCORE;
+//   pros::delay(900);
+//   //back away from wall stake
+//   ch->pid_drive_set(-14, DRIVE_SPEED);
+//   ch->pid_wait();
+
+//   //drive to corner rings
+//   brain->armPos = Arm::DOCK;
+//   brain->intakeOn = true;
+//   ch->pid_turn_set(0, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(24, DRIVE_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(35, DRIVE_SPEED - 40);
+//   ch->pid_wait();
+
+//   //back up and get third ring
+//   ch->pid_drive_set(-1, DRIVE_SPEED);
+//   ch->pid_wait_quick_chain();
+//   ch->pid_turn_set(150, TURN_SPEED - 20);
+//   ch->pid_wait();
+//   ch->pid_drive_set(15, DRIVE_SPEED);
+//   ch->pid_wait();
+
+//   //put mogo in corner
+//   ch->pid_turn_set(-169, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(-20, DRIVE_SPEED);
+//   ch->pid_wait();
+
+//   pros::delay(5000);
+//   brain->mogoOn = false;
+//   brain->intakeOn = false;
+
+//   //surprise
+//   ch->pid_turn_set(180, TURN_SPEED);
+//   ch->pid_wait();
+//   brain->intakeOn = true;
+//   brain->armPos = Arm::LOAD;
+//   ch->pid_drive_set(70, DRIVE_SPEED + 20);
+//   ch->pid_wait();
+//   ch->pid_turn_set(250, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(63, 60);
+//   ch->pid_wait_quick_chain();
+//   brain->intakeOn = false;
+//   ch->pid_turn_set(180, TURN_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(25, DRIVE_SPEED);
+//   ch->pid_wait();
+//   ch->pid_drive_set(-6, DRIVE_SPEED);
+//   ch->pid_wait();
+//   brain->armPos = Arm::SCORE;
+// }
+*/
 
 #pragma region other autons
 // ///

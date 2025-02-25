@@ -15,24 +15,35 @@ private:
 
     int PreRollerSpeed_;
     int HooksSpeed_;
+    bool ArmIsDocked_ = false;
 
 public:
     Intake(Motor Preroller, Motor Hooks)
         : Preroller_(Preroller), Hooks_(Hooks)
     {
+        Hooks_.SetBrakeMode(MOTOR_BRAKE_BRAKE);
+        ArmIsDocked_ = true;
     }
 
     void InputTick() {
         RingDetector_.Tick();
+        Hooks_.Tick();
     }
 
     void OutputTick() {
         Preroller_.SetSpeed(PreRollerSpeed_);
-        Hooks_.SetSpeed(HooksSpeed_);
 
-        if (RingDetector_.GetReverseTimer() > 0 || Hooks_.GetReverseTimer() > 0) {
+        if (RingDetector_.GetReverseTimer() > 0) {
             Hooks_.SetSpeed(127);
         }
+        else  if (Hooks_.GetReverseTimer() > 0 && ArmIsDocked_) {
+            Hooks_.SetSpeed(127);
+        }
+        else {
+            Hooks_.SetSpeed(HooksSpeed_);
+        }
+
+        //fixez::screen_print(std::to_string(RingDetector_.GetReverseTimer()), 1);
     }
 
     void Forward()
@@ -45,6 +56,18 @@ public:
     {
         PreRollerSpeed_ = -127;
         HooksSpeed_ = 127;
+    }
+
+    void HooksReverse()
+    {
+        PreRollerSpeed_ = 127;
+        HooksSpeed_ = 127;
+    }
+
+    void PreRollForward()
+    {
+        PreRollerSpeed_ = 127;
+        HooksSpeed_ = 0;
     }
 
     void Stop()
@@ -73,6 +96,10 @@ public:
 
     void SetAllianceAsRed(bool isRed) {
         RingDetector_.SetAllianceAsRed(isRed);
+    }
+
+    void SetArmDocked(bool ArmIsDocked) {
+        ArmIsDocked_ = ArmIsDocked;
     }
 
 };
