@@ -33,14 +33,17 @@ public:
     void OutputTick() {
         Preroller_.SetSpeed(PreRollerSpeed_);
 
-        if (RingDetector_.GetReverseTimer() > 0 || Hooks_.GetReverseTimer() > 0) {
-            if (ArmIsDocked_) {
-                Hooks_.SetSpeed(127);
-            }
+        if (RingDetector_.GetReverseTimer() > 0) {
+            Hooks_.SetSpeed(127);
+        }
+        else  if (Hooks_.GetReverseTimer() > 0 && ArmIsDocked_) {
+            Hooks_.SetSpeed(127);
         }
         else {
             Hooks_.SetSpeed(HooksSpeed_);
         }
+
+        //fixez::screen_print(std::to_string(RingDetector_.GetReverseTimer()), 1);
     }
 
     void Forward()
@@ -61,7 +64,7 @@ public:
         HooksSpeed_ = 127;
     }
 
-    void PreRollForward() 
+    void PreRollForward()
     {
         PreRollerSpeed_ = 127;
         HooksSpeed_ = 0;
