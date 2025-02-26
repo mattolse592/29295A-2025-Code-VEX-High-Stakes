@@ -38,10 +38,10 @@ void initialize() {
   // // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.autons_add({
-    {"Test Auton", testAuton},
+    //{"Test Auton", testAuton},
     //{"red AWP", redAWP},
     //{"Blue AWP", blueAWP},
-    //{"Blue Ring rush Elim", blueRingRushElim},
+    {"Blue Ring rush Elim", blueRingRushElim},
     //{"Red Mogo rush", redMogoRush}
     //{"skills", skills},
     });

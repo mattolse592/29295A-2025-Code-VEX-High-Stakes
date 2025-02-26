@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "nothing auton",
+    "project_name": "blue ring rush elim",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,9 +425,9 @@
     },
     "upload_options": {
       "description": "jark",
-      "slot": 2,
+      "slot": 1,
       "after": "screen",
-      "icon": "planet"
+      "icon": "power"
     },
     "use_early_access": false
   }

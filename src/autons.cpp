@@ -24,7 +24,6 @@ void brainTick() {
   while (robot->IsAutonomous) {
     brain->Tick();
     pros::delay(ez::util::DELAY_TIME + 5);
-    master.rumble("-");
   }
 }
 
@@ -39,8 +38,12 @@ void testAuton() {
   ch->slew_drive_set(true);
 
   brain->intakeOn = true;
-  brain->mogoOn = true;
-  ch->pid_drive_set(12,10);
+  brain->rushArmOn = true;
+  ch->pid_drive_set(30,110);
+  ch->pid_wait_quick_chain();
+  brain->rushClampOn = true;
+  ch->pid_drive_set(-30, DRIVE_SPEED);
+  ch->pid_wait();
 }
 /*
 void blueAWP() {
@@ -251,31 +254,34 @@ void blueRingRushElim() {
   ch->slew_drive_set(true);
 
   //rush the rings
-  ch->drive_angle_set(10_deg);
-  ch->pid_drive_set(50, 125, false);
+  ch->drive_angle_set(24_deg);
+  ch->pid_drive_set(40, 120, false);
   brain->doinkerOn = true;
   brain->intakeOn = true;
   ch->pid_wait();
-  brain->intakeOn = false;
+  pros::delay(200);
+  brain->rollerOnly = true;
 
-  //pull the rings back
-  ch->pid_drive_set(-26.5, DRIVE_SPEED);
+  //pull the rings back into the mogo
+  ch->pid_turn_set(60, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-23, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
   brain->doinkerOn = false;
-
-  //turn into mogo
-  ch->pid_turn_set(135_deg, TURN_SPEED);
-  ch->pid_wait_quick_chain();
-  ch->pid_drive_set(-7, 70);
-  ch->pid_wait_quick_chain();
   brain->mogoOn = true;
-  pros::delay(200);
-
-  //grab rings
-  brain->intakeOn = true;
+  brain->rollerOnly = false;
+  
+  //turn turn to solo ring stack
   ch->pid_turn_set(80_deg, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(20, DRIVE_SPEED - 20);
+  ch->pid_drive_set(26, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+  pros::delay(20000);
+
+  //grab rings
+  ch->pid_turn_set(80_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(20, DRIVE_SPEED - 50);
   ch->pid_wait();
 
   //grab preload
@@ -575,7 +581,7 @@ void redMogoRush() {
   //rush towards center mogo
   brain->rushArmOn = true;
   brain->intakeOn = true;
-  ch->pid_drive_set(45, 120);
+  ch->pid_drive_set(45, 120, false);
   ch->pid_wait_quick_chain();
   //clamp on it and back away
   brain->rushClampOn = true;
