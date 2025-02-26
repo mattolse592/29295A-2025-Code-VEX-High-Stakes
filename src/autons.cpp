@@ -380,7 +380,7 @@ void skills() {
   brain->armPos = Arm::LOAD;
   ch->pid_drive_set(76, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(15, 40);
+  ch->pid_drive_set(15, 35);
   ch->pid_wait_quick_chain();
 
   //grabs next mogo
@@ -392,10 +392,12 @@ void skills() {
   pros::delay(550);
 
  //puts mogo in corner
-  ch->pid_turn_set(245, TURN_SPEED);
+  ch->pid_turn_set(250, TURN_SPEED);
   ch->pid_wait_quick_chain();
   brain->mogoOn = false;
-  ch->pid_drive_set(-35, 90);
+  ch->pid_drive_set(-33, 90);
+  ch->pid_wait();
+  ch->pid_turn_set(240, TURN_SPEED);
   ch->pid_wait_quick_chain();
 
   //grabs mogo
@@ -405,24 +407,23 @@ void skills() {
   brain->armPos = Arm::REMOTE;
   ch->pid_turn_set(86, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(-24, DRIVE_SPEED - 30);
+  ch->pid_drive_set(-24.5, DRIVE_SPEED - 30);
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
   pros::delay(550);
   ch->pid_drive_set(6, DRIVE_SPEED - 30);
   ch->pid_wait_quick_chain();
 
-  //scores on stake
+  //scores on ally stake
   ch->pid_turn_set(0, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(15, DRIVE_SPEED - 30);
-  ch->pid_wait_quick_chain();
-  ch->pid_drive_set(0.5, DRIVE_SPEED - 30);
+  ch->pid_drive_set(14, DRIVE_SPEED - 30);
   ch->pid_wait();
-  ch->pid_drive_set(-10, DRIVE_SPEED - 20);
+  pros::delay(100);
+  ch->pid_drive_set(-10.5, DRIVE_SPEED - 30);
   ch->pid_wait();
   brain->armPos = Arm::SCORE;
-  pros::delay(1000);
+  pros::delay(700);
   
 
   //drives to next ring
@@ -432,28 +433,113 @@ void skills() {
   brain->intakeOn = true;
   ch->pid_turn_set(125, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(26, DRIVE_SPEED);
+  ch->pid_drive_set(24, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
 
   
   //drives under ladder
-
   ch->pid_turn_set(225, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  pros::delay(500);
+  pros::delay(800);
   brain->rollerOnly = true;
-  ch->pid_drive_set(50, DRIVE_SPEED);
+  ch->pid_drive_set(59, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
   brain->rollerOnly = false;
-  ch->pid_drive_set(50, DRIVE_SPEED - 30);
+  ch->pid_drive_set(40, DRIVE_SPEED - 30);
   ch->pid_wait_quick_chain();
 
   //gets corner rings
-  ch->pid_turn_set(180, TURN_SPEED);
+  ch->pid_turn_set(180, TURN_SPEED - 20);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(10, DRIVE_SPEED - 30);
+  ch->pid_drive_set(10, DRIVE_SPEED - 20);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-2, DRIVE_SPEED - 20);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(-60, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(10, DRIVE_SPEED - 20);
   ch->pid_wait_quick_chain();
 
+  //drops mogo in corner
+  ch->pid_turn_set(10, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-16, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = false;
+  pros::delay(200);
+  
+
+  //grabs ring and loads it 
+  brain->armPos = Arm::LOAD;
+  ch->pid_drive_set(2, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(18, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(18, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(15, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(-30, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //grabs mogo 
+  ch->pid_drive_set(-44, DRIVE_SPEED - 20);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = true;
+  pros::delay(550);
+
+  //drive to wall stake
+  ch->pid_drive_set(52, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(-90, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //scores wall stake
+  brain->rollerOnly = true;
+  brain->armPos = Arm::REMOTE;
+  ch->pid_drive_set(20.5, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->rollerOnly = false;
+  brain->armPos = Arm::SCORE;
+  pros::delay(600);
+  ch->pid_drive_set(-9, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->armPos = Arm::DOCK;
+  ch->pid_turn_set(40, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //drives to next ring
+  ch->pid_drive_set(24, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(-90, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(20, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(0, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //last ring stack then corner
+  ch->pid_drive_set(36, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(-90, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = false;
+  ch->pid_drive_set(-6, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+
+  //hang
+  ch->pid_turn_set(135, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(30, DRIVE_SPEED);
+  brain->armPos = Arm::REACH;
+  brain->intakeOn = true;
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(-135, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-12, DRIVE_SPEED - 40);
+  ch->pid_wait_quick_chain();
+
+  
 }
 
 void redMogoRush() {
