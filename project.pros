@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Skills",
+    "project_name": "nothing auton",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -424,10 +424,10 @@
       }
     },
     "upload_options": {
-      "description": "fark",
-      "slot": 3,
+      "description": "jark",
+      "slot": 2,
       "after": "screen",
-      "icon": "pizza"
+      "icon": "planet"
     },
     "use_early_access": false
   }

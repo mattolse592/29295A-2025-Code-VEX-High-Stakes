@@ -23,6 +23,8 @@ public:
 
     DriveTrainCurveJoystickMath DriveTrain_;
 
+    bool IsAutonomous = false;
+
 public:
     Robot()
         : Mogo_('A'),

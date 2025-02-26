@@ -21,15 +21,27 @@ extern Robot* robot;
 AutonBrain* brain;
 
 void brainTick() {
-  while (pros::competition::is_autonomous) {
+  while (robot->IsAutonomous) {
     brain->Tick();
     pros::delay(ez::util::DELAY_TIME + 5);
+    master.rumble("-");
   }
-  master.rumble("-------");
 }
 
 //  Autonomous testing, can delete 
 
+void testAuton() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(true);
+  ch->slew_drive_set(true);
+
+  brain->intakeOn = true;
+  brain->mogoOn = true;
+  ch->pid_drive_set(12,10);
+}
 /*
 void blueAWP() {
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
@@ -79,8 +91,8 @@ void blueAWP() {
 } */
 
 void blueAWP() {
-
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
   brain = new AutonBrain(robot);
   pros::Task tickTask(brainTick);
   brain->SetAllianceAsRed(false);
@@ -155,6 +167,7 @@ void blueAWP() {
 
 void redAWP() {
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
   brain = new AutonBrain(robot);
   pros::Task tickTask(brainTick);
   brain->SetAllianceAsRed(true);
@@ -231,13 +244,14 @@ void redAWP() {
 
 void blueRingRushElim() {
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
   brain = new AutonBrain(robot);
   pros::Task tickTask(brainTick);
   brain->SetAllianceAsRed(false);
   ch->slew_drive_set(true);
 
   //rush the rings
-  ch->drive_angle_set(30_deg);
+  ch->drive_angle_set(10_deg);
   ch->pid_drive_set(50, 125, false);
   brain->doinkerOn = true;
   brain->intakeOn = true;
@@ -294,6 +308,7 @@ void skills() {
   DRIVE_SPEED = 90;
 
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
   brain = new AutonBrain(robot);
   pros::Task tickTask(brainTick);
   brain->SetAllianceAsRed(true);
@@ -551,10 +566,12 @@ void skills() {
 void redMogoRush() {
 
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
   brain = new AutonBrain(robot);
   pros::Task tickTask(brainTick);
   brain->SetAllianceAsRed(true);
   ch->slew_drive_set(true);
+  
   //rush towards center mogo
   brain->rushArmOn = true;
   brain->intakeOn = true;
