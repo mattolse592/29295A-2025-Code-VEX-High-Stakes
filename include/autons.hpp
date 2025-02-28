@@ -8,6 +8,7 @@ void blueRingRushElim();
 void redMogoRush();
 void skills();
 void testAuton();
+void redMogoRushHalfAWP();
 
 void safeBlue();
 void test_code();

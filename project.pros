@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Blue Ring RUsh Elim",
+    "project_name": "RedAWP",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,7 +425,7 @@
     },
     "upload_options": {
       "description": "park",
-      "slot": 1,
+      "slot": 4,
       "after": "screen",
       "icon": "pizza"
     },
