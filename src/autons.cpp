@@ -402,7 +402,7 @@ void skills() {
   //puts mogo into 1st corner
   ch->pid_drive_set(-9.3, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_turn_set(-55, TURN_SPEED);
+  ch->pid_turn_set(-52, TURN_SPEED);
   ch->pid_wait_quick_chain();
   ch->pid_drive_set(-26.5, DRIVE_SPEED - 20);
   ch->pid_wait();
@@ -451,9 +451,9 @@ void skills() {
   ch->pid_wait_quick_chain();
 
   //scores on ally stake
-  ch->pid_turn_set(0, TURN_SPEED);
+  ch->pid_turn_set(3, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(17.5, DRIVE_SPEED - 20);
+  ch->pid_drive_set(19, DRIVE_SPEED - 20);
   ch->pid_wait();
   pros::delay(200);
   ch->pid_drive_set(-8, DRIVE_SPEED - 30);
@@ -502,6 +502,7 @@ void skills() {
   ch->pid_wait_quick_chain();
   ch->pid_drive_set(-16, DRIVE_SPEED - 30);
   ch->pid_wait_quick_chain();
+  pros::delay(200);
   brain->mogoOn = false;
   pros::delay(200);
 
@@ -531,7 +532,7 @@ void skills() {
   ch->pid_wait_quick_chain();
   ch->pid_drive_set(46, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_turn_set(-90, TURN_SPEED);
+  ch->pid_turn_set(-92, TURN_SPEED);
   ch->pid_wait_quick_chain();
 
   //scores wall stake
@@ -542,7 +543,7 @@ void skills() {
   brain->armPos = Arm::SCORE;
   pros::delay(100);
   brain->rollerOnly = false;
-  pros::delay(600);
+  pros::delay(500);
   //back away from 2nd wallstake
   ch->pid_drive_set(-9, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
@@ -555,7 +556,7 @@ void skills() {
   ch->pid_wait_quick_chain();
   ch->pid_turn_set(-90, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  ch->pid_drive_set(19, DRIVE_SPEED - 10);
+  ch->pid_drive_set(16, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
   ch->pid_turn_set(-3, TURN_SPEED);
   ch->pid_wait_quick_chain();
@@ -565,7 +566,7 @@ void skills() {
   ch->pid_wait();
   ch->pid_turn_set(125, TURN_SPEED - 30);
   ch->pid_wait_quick_chain();
-  pros::delay(400);
+  pros::delay(200);
   //back up then corner
   ch->pid_drive_set(-3, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
@@ -585,7 +586,7 @@ void skills() {
   ch->pid_wait_quick_chain();
   //drive into bar
   ch->pid_drive_set(-28, 55);
-  pros::delay(1500);
+  pros::delay(1300);
   ch->pid_drive_set(5, 30);
   ch->drive_brake_set(MOTOR_BRAKE_COAST);
   //PLEASSE

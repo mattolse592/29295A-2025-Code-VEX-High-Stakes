@@ -39,11 +39,11 @@ void initialize() {
 
   ez::as::auton_selector.autons_add({
     //{"Test Auton", testAuton},
-    {"red AWP", redAWP},
+    //{"red AWP", redAWP},
     //{"Blue AWP", blueAWP},
     //{"Blue Ring rush Elim", blueRingRushElim},
     //{"Red Mogo rush", redMogoRush}
-    //{"skills", skills},
+    {"skills", skills},
     //{"Red Side Mogo Rush Half AWP", redMogoRushHalfAWP},
     });
 
