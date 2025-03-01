@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "skills",
+    "project_name": "RedRingRushQuals",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,9 +425,9 @@
     },
     "upload_options": {
       "description": "park",
-      "slot": 3,
+      "slot": 2,
       "after": "screen",
-      "icon": "pizza"
+      "icon": "pros"
     },
     "use_early_access": false
   }

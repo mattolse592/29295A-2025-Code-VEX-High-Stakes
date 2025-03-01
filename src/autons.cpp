@@ -325,6 +325,78 @@ void blueRingRushElim() {
 
 }
 
+void redRingRushElim() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(true);
+  ch->slew_drive_set(true);
+
+  //rush the rings
+  ch->drive_angle_set(0_deg);
+  ch->pid_drive_set(16, 120, false);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(22, TURN_SPEED);
+  brain->doinkerOn = true;
+  brain->intakeOn = true;
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(17, 120, false);
+  ch->pid_wait();
+  brain->rollerOnly = true;
+ 
+  //pull the rings back into the mogo
+  ch->pid_turn_set(-60, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-26, DRIVE_SPEED - 20);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = true;
+  brain->rollerOnly = false;
+  
+
+  //turn turn to solo ring stack
+  ch->pid_turn_set(-105_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->doinkerOn = false;
+  pros::delay(150);
+  ch->pid_turn_set(-90_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(26, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+  
+
+  //grab preloa
+  ch->pid_turn_set(-180_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  pros::delay(500);
+  brain->armPos = Arm::LOAD;
+  ch->pid_drive_set(24.5, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(90_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_wait();
+
+  //drive to allinace stake
+  brain->rollerOnly = true;
+  ch->pid_drive_set(45, DRIVE_SPEED);
+  ch->pid_wait();
+  ch->pid_turn_set(-180_deg, TURN_SPEED);
+  ch->pid_wait();
+
+  //score on alliance stake
+  ch->pid_drive_set(46, DRIVE_SPEED);
+  ch->pid_wait();
+  pros::delay(500);
+  ch->drive_angle_set(-180_deg);
+  pros::delay(500);
+  ch->pid_drive_set(-8, DRIVE_SPEED);
+  ch->pid_wait();
+  brain->armPos = Arm::SCORE;
+  pros::delay(130000);
+
+
+}
+
 void skills() {
   DRIVE_SPEED = 90;
 
@@ -343,7 +415,6 @@ void skills() {
   pros::delay(230);
   ch->pid_drive_set(9, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
-
 
   brain->mogoOn = false;
 
@@ -394,7 +465,7 @@ void skills() {
   ch->pid_wait_quick_chain();
   ch->pid_drive_set(-10.6, DRIVE_SPEED);
   ch->pid_wait();
-  ch->pid_turn_set(78, 70);
+  ch->pid_turn_set(75, 70);
   ch->pid_wait_quick_chain();
   ch->pid_drive_set(11, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
@@ -409,12 +480,12 @@ void skills() {
   brain->mogoOn = false;
 
   //drives to next 2ndcorner
-  ch->pid_drive_set(12, DRIVE_SPEED);
+  ch->pid_drive_set(11, DRIVE_SPEED);
   ch->pid_wait();
   ch->pid_turn_set(0, TURN_SPEED);
   ch->pid_wait_quick_chain();
   brain->armPos = Arm::LOAD;
-  ch->pid_drive_set(76, DRIVE_SPEED);
+  ch->pid_drive_set(77.5, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
   ch->pid_drive_set(15, 35);
   ch->pid_wait_quick_chain();
@@ -447,7 +518,7 @@ void skills() {
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
   pros::delay(400);
-  ch->pid_drive_set(6, DRIVE_SPEED - 30);
+  ch->pid_drive_set(3, DRIVE_SPEED - 30);
   ch->pid_wait_quick_chain();
 
   //scores on ally stake

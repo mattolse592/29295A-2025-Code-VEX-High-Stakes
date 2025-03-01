@@ -70,6 +70,12 @@ public:
         HooksSpeed_ = 0;
     }
 
+    void PreRollReverse()
+    {
+        PreRollerSpeed_ = -127;
+        HooksSpeed_ = 0;
+    }
+
     void Stop()
     {
         PreRollerSpeed_ = 0;
