@@ -42,8 +42,12 @@ void initialize() {
     //{"red AWP", redAWP},
     //{"Blue AWP", blueAWP},
     //{"Blue Ring rush Elim", blueRingRushElim},
-    {"red Ring rush Elim", redRingRushElim},
-    //{"Red Mogo rush", redMogoRush}
+    //{"Blue half awp", blueHalfAWP},
+    //{"Blue half awp", blue3RingAWP},
+   // {"red half awp", red3RingAWP},
+    //{"Red half awp", redHalfAWP},
+    //{"red Ring rush Elim", redRingRushElim},
+    {"Red Mogo rush", redMogoRush}
     //{"skills", skills},
     //{"Red Side Mogo Rush Half AWP", redMogoRushHalfAWP},
     });

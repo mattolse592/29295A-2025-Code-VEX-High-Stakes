@@ -10,6 +10,10 @@ void redMogoRush();
 void skills();
 void testAuton();
 void redMogoRushHalfAWP();
+void blueHalfAWP();
+void blue3RingAWP();
+void red3RingAWP();
+void redHalfAWP();
 
 void safeBlue();
 void test_code();
