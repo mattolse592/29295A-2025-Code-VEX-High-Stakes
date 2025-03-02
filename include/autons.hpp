@@ -4,8 +4,16 @@ void default_constants();
 
 void blueAWP(); // Blue AWP. Ring on alliance, Two rings on one mogo, one on the other, ends with touching the bar
 void redAWP(); // Red AWP. Ring on alliance, Two rings on one mogo, one on the other, ends with touching the bar
+void blueRingRushElim();
+void redRingRushElim();
 void redMogoRush();
 void skills();
+void testAuton();
+void redMogoRushHalfAWP();
+void blueHalfAWP();
+void blue3RingAWP();
+void red3RingAWP();
+void redHalfAWP();
 
 void safeBlue();
 void test_code();

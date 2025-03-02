@@ -73,12 +73,7 @@ public:
     {
         if (AutonomousMode_ == false)
         {
-            // assigns motor speeds
-            for (int i = 0; i < sideMotors; i++)
-            {
-                Chassis_.left_motors[i].move(LeftSpeed_);
-                Chassis_.right_motors[i].move(RightSpeed_);
-            }
+            Chassis_.drive_set(LeftSpeed_, RightSpeed_);
         }
     }
 

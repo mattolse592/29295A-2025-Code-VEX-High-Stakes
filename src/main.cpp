@@ -38,11 +38,19 @@ void initialize() {
   // // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.autons_add({
-      //{"red AWP", redAWP},
-      //{"Blue AWP", blueAWP},
-      //{"Red Mogo rush", redMogoRush}
-      {"skills", skills},
-  });
+    //{"Test Auton", testAuton},
+    //{"red AWP", redAWP},
+    //{"Blue AWP", blueAWP},
+    //{"Blue Ring rush Elim", blueRingRushElim},
+    //{"Blue half awp", blueHalfAWP},
+    //{"Blue half awp", blue3RingAWP},
+   // {"red half awp", red3RingAWP},
+    //{"Red half awp", redHalfAWP},
+    //{"red Ring rush Elim", redRingRushElim},
+    {"Red Mogo rush", redMogoRush}
+    //{"skills", skills},
+    //{"Red Side Mogo Rush Half AWP", redMogoRushHalfAWP},
+    });
 
   ez::as::initialize();
 
@@ -85,13 +93,13 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-  
+
   robot->DriveTrain_.Reset();
 
- // chassis.odom_xyt_set(0_in, 0_in, 0_deg);    // Set the current position, you can start at a specific position with this
+  // chassis.odom_xyt_set(0_in, 0_in, 0_deg);    // Set the current position, you can start at a specific position with this
   robot->DriveTrain_.DriveTrain_.Chassis_.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
 
-   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
+  ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
 
 #pragma region EZ template tasks
@@ -176,9 +184,11 @@ void autonomous() {
  */
 
 void opcontrol() {
+  robot->IsAutonomous = false;
   MatthewBrain brain(robot);
   robot->SetAllianceAsRed(true);
-  
+  robot->DriveTrain_.DriveTrain_.Chassis_.drive_brake_set(MOTOR_BRAKE_COAST);
+
   while (true) {
     brain.Tick();
 

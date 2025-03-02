@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Skills",
+    "project_name": "redMogoRush",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -424,10 +424,10 @@
       }
     },
     "upload_options": {
-      "description": "fark",
-      "slot": 3,
+      "description": "park",
+      "slot": 7,
       "after": "screen",
-      "icon": "pizza"
+      "icon": "pros"
     },
     "use_early_access": false
   }
