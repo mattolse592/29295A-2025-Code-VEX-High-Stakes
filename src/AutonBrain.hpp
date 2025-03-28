@@ -25,6 +25,7 @@ public:
     bool doinkerOn = false;
     bool rushClampOn = false;
     bool rushArmOn = false;
+    bool intakeLiftOn = false;
     bool rollerOnly = false;
 
     void Tick()
@@ -80,6 +81,12 @@ public:
         }
         else {
             Robot_->rushArm_.Deactivate();
+        }
+
+        if (intakeLiftOn) {
+            Robot_->IntakeLift_.Activate();
+        } else {
+            Robot_->IntakeLift_.Deactivate();
         }
 
         Robot_->AutonOutputTick();

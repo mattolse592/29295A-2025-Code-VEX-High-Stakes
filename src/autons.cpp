@@ -23,7 +23,7 @@ AutonBrain* brain;
 void brainTick() {
   while (robot->IsAutonomous) {
     brain->Tick();
-    pros::delay(ez::util::DELAY_TIME + 5);
+    pros::delay(ez::util::DELAY_TIME);
   }
 }
 
@@ -37,22 +37,25 @@ void testAuton() {
   brain->SetAllianceAsRed(true);
   ch->slew_drive_set(true);
 
-  brain->armPos = Arm::REACH;
-  pros::delay(500);
-  //drive into bar
-  ch->pid_drive_set(-28, 50);
-  pros::delay(2000);
-  ch->pid_drive_set(5, 30);
-  pros::delay(700);
-  ch->pid_targets_reset();
-  ch->left_motors[0].move(0);
-  ch->left_motors[1].move(0);
-  ch->left_motors[2].move(0);
-  ch->right_motors[0].move(0);
-  ch->right_motors[1].move(0);
-  ch->right_motors[2].move(0);
+  DRIVE_SPEED = 60;
 
-  ch->drive_brake_set(MOTOR_BRAKE_COAST);
+  ch->pid_drive_set(20, DRIVE_SPEED);
+  brain->intakeOn = true;
+  ch->pid_wait();
+  pros::delay(400);
+
+
+  ch->pid_drive_set(-10, DRIVE_SPEED);
+  ch->pid_wait();
+
+  pros::delay(200);
+  ch->pid_drive_set(10, DRIVE_SPEED);
+  brain->intakeLiftOn = true;
+  ch->pid_wait();
+
+  brain->intakeLiftOn = false;
+  pros::delay(500);
+  ch->pid_drive_set(-20, DRIVE_SPEED);
 }
 /*
 void blueAWP() {
@@ -239,7 +242,7 @@ void redAWP() {
   ch->pid_wait_quick_chain();
   ch->pid_turn_set(10, TURN_SPEED);
   ch->pid_wait_quick_chain();
-  
+
   //driuve into mogo
   ch->pid_drive_set(-17, 60);
   ch->pid_wait_quick_chain();
@@ -493,6 +496,83 @@ void blueRingRushElim() {
 
 }
 
+void RedRingRushCorner() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(true);
+  ch->slew_drive_set(true);
+
+  //rush the rings
+  ch->drive_angle_set(-24_deg);
+  ch->pid_drive_set(39, 120, false);
+  brain->rushArmOn = true;
+  brain->intakeOn = true;
+  ch->pid_wait();
+  pros::delay(200);
+  brain->rollerOnly = true;
+
+  //pull the rings back into the mogo
+  ch->pid_turn_set(-60, TURN_SPEED - 30);
+  ch->pid_wait();
+  ch->pid_drive_set(-23, DRIVE_SPEED - 40);
+  ch->pid_wait_quick_chain();
+  brain->rushArmOn = false;
+  brain->mogoOn = true;
+  brain->rollerOnly = false;
+
+  //turn turn to solo ring stack
+  ch->pid_turn_set(-80_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(22, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+
+  //turn to corner stack
+  ch->pid_turn_set(-162_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(32, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_turn_set(-135_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //go into corner
+  ch->pid_drive_set(8, DRIVE_SPEED - 70);
+  ch->pid_wait();
+  pros::delay(200);
+
+  //back away
+  ch->pid_drive_set(-10, DRIVE_SPEED - 85);
+  ch->pid_wait();
+  ch->pid_drive_set(2, DRIVE_SPEED - 60);
+  ch->pid_wait();
+  pros::delay(800);
+  //drive in and lift intake
+  brain->intakeLiftOn = true;
+  ch->pid_drive_set(10, DRIVE_SPEED - 70);
+  ch->pid_wait();
+  brain->intakeLiftOn = false;
+  pros::delay(500);
+  ch->pid_drive_set(-10, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //go to middle stakc
+  ch->pid_turn_set(90_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(20, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  brain->intakeLiftOn = true;
+  ch->pid_drive_set(8, DRIVE_SPEED - 30);
+  ch->pid_wait();
+  brain->intakeLiftOn = false;
+
+  ch->pid_drive_set(8, DRIVE_SPEED - 30);
+  ch->pid_wait();
+
+
+}
+
 void redHalfAWP() {
 
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
@@ -560,7 +640,7 @@ void redRingRushElim() {
   ch->pid_drive_set(18, 120, false);
   ch->pid_wait();
   brain->rollerOnly = true;
- 
+
   //pull the rings back into the mogo
   ch->pid_turn_set(-65, TURN_SPEED);
   ch->pid_wait_quick_chain();
@@ -568,7 +648,7 @@ void redRingRushElim() {
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
   brain->rollerOnly = false;
-  
+
 
   //turn turn to solo ring stack
   ch->pid_turn_set(-105_deg, TURN_SPEED);
@@ -579,7 +659,7 @@ void redRingRushElim() {
   ch->pid_wait_quick_chain();
   ch->pid_drive_set(22, DRIVE_SPEED - 30);
   ch->pid_wait_quick_chain();
-  
+
 
   //grab preloa
   ch->pid_turn_set(-180_deg, TURN_SPEED);

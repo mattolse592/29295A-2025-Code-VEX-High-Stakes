@@ -16,6 +16,7 @@ public:
     Pistonf Doinker_;
     Pistonf rushArm_;
     Pistonf rushClamp_;
+    Pistonf IntakeLift_;
 
     Intake Intake_;
 
@@ -31,7 +32,8 @@ public:
           Doinker_('D'),
           rushArm_('E'),
           rushClamp_('C'),
-          Intake_(Motor(-20), Motor(-18)),
+          IntakeLift_('F'),
+          Intake_(Motor(20), Motor(18)),
           Arm_(Motor(-13), RotationSensor(15)),
           DriveTrain_()
 

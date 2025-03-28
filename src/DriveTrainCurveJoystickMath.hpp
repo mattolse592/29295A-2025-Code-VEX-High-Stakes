@@ -20,7 +20,7 @@ private:
 
     // input curve constants
     float pCurve = 0.6;       // curve for fwd/back
-    float tCoefficient = -1.1; // curve for turn
+    float tCoefficient = 1.2; // curve for turn
     float tCurve = 0.4;       // coefficient for turn
 
 public:
@@ -38,7 +38,8 @@ public:
         // modelled after https://www.desmos.com/calculator/asjs86sdpy
 
         //calculates curve
-        turnC = turn * tCoefficient;
+        //turnC = turn * tCoefficient;
+        turnC = tCoefficient * ((1 - tCurve) * turn) + ((tCurve * pow(turn, 3)) / 16129); // 16129 is 127^2
 
         if (shiftButtonPressed)
         {
@@ -47,8 +48,8 @@ public:
         }
 
         //assigns motor speeds
-        DriveTrain_.setLeftSpeed(powerC - turnC);
-        DriveTrain_.setRightSpeed(powerC + turnC);
+        DriveTrain_.setLeftSpeed(powerC + turnC);
+        DriveTrain_.setRightSpeed(powerC - turnC);
     }
 
     void OutputTick() {

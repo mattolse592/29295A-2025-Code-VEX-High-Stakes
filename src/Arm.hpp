@@ -128,12 +128,12 @@ public:
 private:
     void Dock()
     {
-        pid_.setTarget(5.0);
+        pid_.setTarget(2.0);
     }
 
     void Load()
     {
-        pid_.setTarget(30.0);
+        pid_.setTarget(28.0);
     }
 
     void Reach()
