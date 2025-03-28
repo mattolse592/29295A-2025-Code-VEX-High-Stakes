@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "intake Alwqays ON",
+    "project_name": "redAWP",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,7 +425,7 @@
     },
     "upload_options": {
       "description": "fark",
-      "slot": 2,
+      "slot": 1,
       "after": "screen",
       "icon": "pizza"
     },
