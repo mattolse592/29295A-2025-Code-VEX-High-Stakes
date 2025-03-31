@@ -454,25 +454,33 @@ void blueRingRushElim() {
   ch->pid_drive_set(50, DRIVE_SPEED);
   ch->pid_wait();
   ch->pid_turn_set(211_deg, TURN_SPEED);
-  brain->armPos = Arm::LOAD;
+  //brain->armPos = Arm::LOAD;
   ch->pid_wait_quick_chain();
+  
+  //colour sort middle rings
+  ch->pid_drive_set(-5, DRIVE_SPEED);
   ch->pid_wait();
-  //drive to allinace stake
-
-  //score on alliance stake
-  pros::delay(1000);
-  brain->intakeOn = false;
-  brain->armPos = Arm::SCORE;
-  pros::delay(2000);
-  ch->pid_drive_set(-4, DRIVE_SPEED);
+  ch->pid_turn_set(-90_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(30, 50);
   ch->pid_wait();
-  brain->armPos = Arm::DOCK;
 
-  //drive to ladder
-  ch->pid_turn_set(-15_deg, TURN_SPEED);
-  ch->pid_wait_quick_chain();
-  ch->pid_drive_set(30, 70);
-  ch->pid_wait_quick_chain();
+  
+
+  // //score on alliance stake
+  // pros::delay(1000);
+  // brain->intakeOn = false;
+  // //brain->armPos = Arm::SCORE;
+  // pros::delay(2000);
+  // ch->pid_drive_set(-4, DRIVE_SPEED);
+  // ch->pid_wait();
+  // //brain->armPos = Arm::DOCK;
+
+  // //drive to ladder
+  // ch->pid_turn_set(-15_deg, TURN_SPEED);
+  // ch->pid_wait_quick_chain();
+  // ch->pid_drive_set(30, 70);
+  // ch->pid_wait_quick_chain();
 
   // //back up to get middle stack
   // ch->pid_drive_set(-16, DRIVE_SPEED);
@@ -622,7 +630,7 @@ void redRingRushElim() {
   ch->pid_wait();
 }
 
-void skills() {
+void OLDskills() {
   DRIVE_SPEED = 90;
 
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
@@ -890,7 +898,7 @@ void skills() {
 
 }
 
-void OLDskills() {
+void skills() {
   //BACKWARDS MOGO ACTIVATION
   DRIVE_SPEED = 90;
 

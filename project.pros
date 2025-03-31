@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "redMogoRush",
+    "project_name": "BlueRingRush",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,7 +425,7 @@
     },
     "upload_options": {
       "description": "park",
-      "slot": 7,
+      "slot": 2,
       "after": "screen",
       "icon": "pros"
     },
