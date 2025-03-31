@@ -1,7 +1,9 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "BlueRingRush",
+
+    "project_name": "redAWP",
+
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -424,10 +426,12 @@
       }
     },
     "upload_options": {
-      "description": "park",
-      "slot": 2,
+
+      "description": "fark",
+      "slot": 1,
+
       "after": "screen",
-      "icon": "pros"
+      "icon": "pizza"
     },
     "use_early_access": false
   }
