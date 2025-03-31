@@ -1,7 +1,9 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
+
     "project_name": "redAWP",
+
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -424,8 +426,10 @@
       }
     },
     "upload_options": {
+
       "description": "fark",
       "slot": 1,
+
       "after": "screen",
       "icon": "pizza"
     },

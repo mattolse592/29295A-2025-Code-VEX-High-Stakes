@@ -41,6 +41,7 @@ void initialize() {
     //{"Test Auton", testAuton},
     {"red AWP", redAWP},
     //{"Blue AWP", blueAWP},
+
     //{"Red Ring rush Corner", RedRingRushCorner},
     //{"Blue Ring rush Elim", blueRingRushElim},
     //{"Blue half awp", blueHalfAWP},
@@ -187,7 +188,7 @@ void autonomous() {
 void opcontrol() {
   robot->IsAutonomous = false;
   MatthewBrain brain(robot);
-  robot->SetAllianceAsRed(true);
+  robot->SetAllianceAsRed(false);
   robot->DriveTrain_.DriveTrain_.Chassis_.drive_brake_set(MOTOR_BRAKE_COAST);
 
   while (true) {
