@@ -14,6 +14,7 @@ private:
 
     bool manualTakeover_ = false;
     int StickInput_;
+    
 
 public:
     enum State
@@ -26,6 +27,9 @@ public:
         MANUAL = 5,
         REMOTE = 6
     };
+
+    int downPresses_ = 0;
+    int upPresses_ = 0;
 
 private:
     State Target_ = DOCK;
