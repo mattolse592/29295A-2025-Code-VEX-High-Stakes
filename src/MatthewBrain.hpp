@@ -18,6 +18,10 @@ private:
     bool RushArmOn_ = false;
     bool RushJawOn_ = false;
 
+    //timers for arm zero
+    int zeroPressedCounter = 0;
+    int zeroPressedResetCounter = 0;
+
 public:
     MatthewBrain(Robot* Robot)
         : Robot_(Robot), Controller_()
@@ -25,23 +29,6 @@ public:
     {
         Controller_.Y_.setValue(true);
         Robot_->Intake_.SetArmDocked(false);
-
-        // //initialize the robot to your starting state
-        // Robot_->Mogo_.Deactivate();
-        // Robot_->Doinker_.Deactivate();
-        // Robot_->rushArm_.Deactivate();
-        // Robot_->rushClamp_.Deactivate();
-
-        // Robot_->Intake_.Stop();
-        // Robot_->Arm_.Zero();
-
-        // // turn off slew
-        // Robot->DriveTrain_.DriveTrain_.Chassis_.slew_drive_set(false);
-
-        // //turn off drive pid
-        // Robot_->DriveTrain_.DriveTrain_.Chassis_.pid_targets_reset();
-
-
     }
 
     void Tick()
@@ -78,18 +65,45 @@ public:
         //
         //arm
         //
+
+        //zero
         if (Controller_.Left_.IsPressed()) {
-            Robot_->Arm_.Zero();
+            zeroPressedCounter++;
+
+            if (zeroPressedCounter > 50) {
+                Controller_.Vibrate();
+                Robot_->Arm_.Zero();
+                zeroPressedCounter = 0;
+            }
+        } else if (zeroPressedCounter > 0) {
+            zeroPressedResetCounter++;
+
+            if (zeroPressedResetCounter > 50) {
+                zeroPressedCounter = 0;
+                zeroPressedResetCounter = 0;
+            }
         }
 
+
+
         if (Controller_.Down_.WasTapped()) {
-            Robot_->Arm_.MoveDown();
+            if (Robot_->Arm_.GetState() > 4) {
+                Robot_->Arm_.SetTarget((Arm::State)(Robot_->Arm_.GetState() + 1));
+            } else {
+                Robot_->Arm_.MoveDown();
+            }
         }
 
         if (Controller_.Up_.WasTapped()) {
-            Robot_->Arm_.MoveUp();
+            if (Robot_->Arm_.GetState() > 5) {
+                Robot_->Arm_.SetTarget((Arm::State)(Robot_->Arm_.GetState() - 1));
+            } else {
+                Robot_->Arm_.MoveUp();
+            }
         }
 
+
+        
         if (Controller_.Right_.IsPressed()) {
             if (Robot_->Arm_.GetState() == Arm::LOAD) {
                 Controller_.L1_.SetPressed(0);
@@ -108,7 +122,7 @@ public:
         }
 
         if (Controller_.X_.IsPressed()) {
-            Robot_->Arm_.SetTarget(Arm::DESCORE);
+            Robot_->Arm_.SetTarget(Arm::DESCORE1);
             Controller_.L1_.SetPressed(3);
             Robot_->Arm_.ManualTakeoverSet(false);
         }

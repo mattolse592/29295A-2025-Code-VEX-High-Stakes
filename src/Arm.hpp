@@ -13,8 +13,9 @@ private:
     PIDController pid_ = PIDController(2, 0.05, 2, 0.0);
 
     bool manualTakeover_ = false;
+    bool zeroMode = false;
     int StickInput_;
-    
+
 
 public:
     enum State
@@ -23,9 +24,13 @@ public:
         LOAD = 1,
         REACH = 2,
         SCORE = 3,
-        DESCORE = 4,
-        MANUAL = 5,
-        REMOTE = 6
+        REMOTE = 4,
+        DESCORE1 = 5,
+        DESCORE2 = 6,
+        DESCORE3 = 7,
+        DESCORE4 = 8,
+        DESCORE5 = 9,
+        DESCORE6 = 10
     };
 
     int downPresses_ = 0;
@@ -57,26 +62,52 @@ public:
             switch (Target_)
             {
             case DOCK:
-                Dock();
+                pid_.setTarget(2.0);
                 break;
             case LOAD:
-                Load();
+                pid_.setTarget(28.0);
                 break;
             case REACH:
-                Reach();
+                pid_.setTarget(130.0);
                 break;
             case SCORE:
-                Score();
-                break;
-            case DESCORE:
-                Descore();
+                pid_.setTarget(235.0);
                 break;
             case REMOTE:
-            Remote();
-            break;
+                pid_.setTarget(90.0);
+                break;
+            case DESCORE1:
+                pid_.setTarget(160.0);
+                break;
+            case DESCORE2:
+                pid_.setTarget(170.0);
+                break;
+            case DESCORE3:
+                pid_.setTarget(180.0);
+                break;
+            case DESCORE4:
+                pid_.setTarget(193.0);
+                break;
+            case DESCORE5:
+                pid_.setTarget(205.0);
+                break;
+            case DESCORE6:
+                pid_.setTarget(220.0);
+                break;
             default:
                 break;
             }
+            ez::screen_print("normal pid", 2);
+        }
+        else if (zeroMode) {
+            Motor_.SetSpeed(-10);
+
+            if (Motor_.GetReverseTimer() > 14) {
+                RotationSensor_.Zero();
+                zeroMode = false;
+                //ManualTakeoverSet(false);
+            }
+            ez::screen_print("zero Mode", 2);
         }
         else {
             int current_position = RotationSensor_.GetPosition();
@@ -84,6 +115,8 @@ public:
 
             // Use the output from PID to set motor speed
             Motor_.SetSpeed(pid_output);
+
+            ez::screen_print("Manual Takeover", 2);
         }
     }
 
@@ -108,7 +141,8 @@ public:
     }
 
     void Zero() {
-        RotationSensor_.Zero();
+        ManualTakeoverSet(true);
+        zeroMode = true;
     }
 
 #pragma region get functions
@@ -128,35 +162,5 @@ public:
     }
 #pragma endregion
 
-#pragma region arm states
-private:
-    void Dock()
-    {
-        pid_.setTarget(2.0);
-    }
-
-    void Load()
-    {
-        pid_.setTarget(28.0);
-    }
-
-    void Reach()
-    {
-        pid_.setTarget(130.0);
-    }
-
-    void Score()
-    {
-        pid_.setTarget(235.0);
-    }
-
-    void Descore() {
-        pid_.setTarget(160.0);
-    }
-
-    void Remote() {
-        pid_.setTarget(90.0);
-    }
-#pragma endregion
 };
 #endif // ARM_HPP

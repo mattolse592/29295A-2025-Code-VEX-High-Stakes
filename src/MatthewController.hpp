@@ -86,6 +86,10 @@ public:
         Left_.Tick();
         Right_.Tick();
     }
+
+    void Vibrate() {
+        master.rumble("-.");
+    }
 };
 
 #endif // MATTHEWCONTROLLER_HPP
