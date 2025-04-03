@@ -16,7 +16,7 @@ private:
     double turn;
     double turnC;
 
-    bool shiftButtonPressed = false;
+    bool HalfSpeed = false;
 
     // input curve constants
     float pCurve = 0.6;       // curve for fwd/back
@@ -41,10 +41,9 @@ public:
         //turnC = turn * tCoefficient;
         turnC = tCoefficient * ((1 - tCurve) * turn) + ((tCurve * pow(turn, 3)) / 16129); // 16129 is 127^2
 
-        if (shiftButtonPressed)
+        if (HalfSpeed)
         {
-            powerC = powerC / 2;
-            turnC = turnC / 2;
+            powerC *= 0.75;
         }
 
         //assigns motor speeds
@@ -62,8 +61,8 @@ public:
     void SetRightStickValue(int value) {
         turn = value;
     }
-    void SetShiftButtonValue(bool value) {
-        shiftButtonPressed = value;
+    void SetHalfSpeedValue(bool value) {
+        HalfSpeed = value;
     }
 
     void Reset() {

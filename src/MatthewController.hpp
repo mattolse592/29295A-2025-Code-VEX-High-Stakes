@@ -31,7 +31,7 @@ public:
 
     ToggleButton A_;
     ToggleButton B_;
-    HoldButton X_;
+    ToggleButton X_;
     ToggleButton Y_;
 
     TapButton Up_;
@@ -85,6 +85,10 @@ public:
         Down_.Tick();
         Left_.Tick();
         Right_.Tick();
+    }
+
+    void Vibrate() {
+        master.rumble("-.");
     }
 };
 

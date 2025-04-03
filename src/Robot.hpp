@@ -26,6 +26,8 @@ public:
 
     bool IsAutonomous = false;
 
+    bool HalfSpeed = false;
+
 public:
     Robot()
         : Mogo_('A'),
@@ -46,6 +48,7 @@ public:
     {
         Intake_.InputTick();
         Arm_.InputTick();
+        DriveTrain_.SetHalfSpeedValue(HalfSpeed);
         DriveTrain_.InputTick();
     }
 

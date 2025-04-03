@@ -39,10 +39,11 @@ void initialize() {
 
   ez::as::auton_selector.autons_add({
     //{"Test Auton", testAuton},
-    {"red AWP", redAWP},
+    //{"red AWP", redAWP},
     //{"Blue AWP", blueAWP},
+    //{"Red Baker auto", redPosAWP},
 
-    //{"Red Ring rush Corner", RedRingRushCorner},
+    {"Red Ring rush Corner", RedRingRushCorner},
     //{"Blue Ring rush Elim", blueRingRushElim},
     //{"Blue half awp", blueHalfAWP},
     //{"Blue half awp", blue3RingAWP},
@@ -188,7 +189,6 @@ void autonomous() {
 void opcontrol() {
   robot->IsAutonomous = false;
   MatthewBrain brain(robot);
-  robot->SetAllianceAsRed(false);
   robot->DriveTrain_.DriveTrain_.Chassis_.drive_brake_set(MOTOR_BRAKE_COAST);
 
   while (true) {

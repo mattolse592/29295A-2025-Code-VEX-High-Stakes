@@ -107,11 +107,13 @@ public:
             Robot_->Arm_.ManualTakeoverSet(false);
         }
 
-        if (Controller_.X_.IsPressed()) {
+        if (Controller_.X_.WasTapped()) {
             Robot_->Arm_.SetTarget(Arm::DESCORE);
             Controller_.L1_.SetPressed(3);
             Robot_->Arm_.ManualTakeoverSet(false);
         }
+
+
 
         //
         //pistons
@@ -125,6 +127,11 @@ public:
             if (Controller_.B_.WasTapped()) {
                 RushArmOn_ = !RushArmOn_;
             }
+
+            if (Controller_.X_.WasTapped()) {
+                Robot_->HalfSpeed = !Robot_->HalfSpeed;
+                Controller_.Vibrate();
+            }
         }
         else {
             if (Controller_.A_.WasTapped()) {
@@ -133,6 +140,7 @@ public:
             if (Controller_.B_.WasTapped()) {
                 DoinkerOn_ = !DoinkerOn_;
             }
+
         }
 
         Robot_->Mogo_.SetValue(MogoOn_);

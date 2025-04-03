@@ -10,7 +10,7 @@
 
 // These are out of 127
 int DRIVE_SPEED = 110;
- int TURN_SPEED = 80;
+int TURN_SPEED = 80;
 const int SWING_SPEED = 110;
 
 ///
@@ -180,6 +180,108 @@ void blueAWP() {
 
 }
 
+void redPosAWP() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(true);
+  ch->slew_drive_set(true);
+
+  //score alliancew staKE
+  brain->armPos = Arm::LOAD;
+  brain->intakeOn = true;
+  pros::delay(400);
+  ch->pid_drive_set(2, 50);
+  brain->intakeOn = false;
+  brain->armPos = Arm::SCORE;
+  pros::delay(700);
+
+  //move back into mogo
+  ch->pid_drive_set(-7, 75);
+  pros::delay(200);
+  brain->armPos = Arm::DOCK;
+  ch->pid_wait_quick_chain();
+
+  ch->pid_turn_set(-45, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-21, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = true;
+  pros::delay(300);
+
+  //turn towards allliance stake ring
+  ch->pid_turn_set(-20, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->intakeLiftOn = true;
+  ch->pid_drive_set(13, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  ch->pid_turn_set(45, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  brain->intakeOn = true;
+  pros::delay(300);
+  ch->pid_drive_set(9, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->intakeLiftOn = false;
+  pros::delay(300);
+
+  ch->pid_drive_set(-7, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  pros::delay(400);
+
+  ch->pid_turn_set(135, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->intakeOn = false;
+  ch->pid_drive_set(19, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+
+  ch->pid_turn_set(84, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(9, DRIVE_SPEED);
+  ch->pid_wait();
+
+  brain->doinkerOn = true;
+  pros::delay(200);
+
+  ch->pid_turn_set(100, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-18, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  brain->doinkerOn = false;
+  ch->pid_turn_set(95, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->intakeLiftOn = false;
+  brain->intakeOn = true;
+  ch->pid_turn_set(110, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(10, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  ch->pid_turn_set(-120, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  ch->pid_drive_set(22, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->rollerOnly = true;
+
+  ch->pid_turn_set(90, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = false;
+  ch->pid_turn_set(-40, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  ch->pid_drive_set(-22, DRIVE_SPEED - 50);
+  ch->pid_wait();
+  brain->mogoOn = true;
+  pros::delay(500);
+  brain->rollerOnly = false;
+
+}
+
 void redAWP() {
 
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
@@ -195,11 +297,11 @@ void redAWP() {
   //move forward and score on alliance stake
   brain->armPos = Arm::LOAD;
   brain->intakeOn = true;
-  pros::delay(500);
+  pros::delay(400);
   ch->pid_drive_set(5, 50);
   brain->intakeOn = false;
   brain->armPos = Arm::SCORE;
-  pros::delay(800);
+  pros::delay(700);
 
   //move back into mogo
   ch->pid_drive_set(-6, 75);
@@ -258,7 +360,7 @@ void redAWP() {
   ch->pid_turn_set(-180, TURN_SPEED);
   ch->pid_wait();
   brain->mogoOn = false;
-  brain->intakeOn= false;
+  brain->intakeOn = false;
   pros::delay(100);
 
   //turn towards mogo
@@ -268,10 +370,10 @@ void redAWP() {
   ch->pid_wait_quick_chain();
 
   //clamp mogo
-   brain->mogoOn = true;
-   pros::delay(150);
+  brain->mogoOn = true;
+  pros::delay(150);
 
-   //grab ring
+  //grab ring
   ch->pid_turn_set(-40, TURN_SPEED);
   ch->pid_wait_quick_chain();
   brain->intakeOn = true;
@@ -316,7 +418,7 @@ void redAWP() {
   ch->pid_drive_set(-17, 60);
   ch->pid_wait_quick_chain();
   brain->mogoOn = true;
-  
+
 }
 
 void blueHalfAWP() {
@@ -517,7 +619,7 @@ void blueRingRushElim() {
   ch->pid_turn_set(211_deg, TURN_SPEED);
   //brain->armPos = Arm::LOAD;
   ch->pid_wait_quick_chain();
-  
+
   //colour sort middle rings
   ch->pid_drive_set(-5, DRIVE_SPEED);
   ch->pid_wait();
@@ -526,7 +628,7 @@ void blueRingRushElim() {
   ch->pid_drive_set(30, 50);
   ch->pid_wait();
 
-  
+
 
   // //score on alliance stake
   // pros::delay(1000);
@@ -620,7 +722,7 @@ void RedRingRushCorner() {
   ch->pid_wait();
   brain->intakeLiftOn = false;
   pros::delay(500);
-  ch->pid_drive_set(-10, DRIVE_SPEED);
+  ch->pid_drive_set(-12, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
 
   //go to middle stakc

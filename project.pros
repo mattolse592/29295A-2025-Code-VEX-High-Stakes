@@ -1,9 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-
-    "project_name": "redAWP",
-
+    "project_name": "redCornerRingRush",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -426,10 +424,8 @@
       }
     },
     "upload_options": {
-
       "description": "fark",
-      "slot": 1,
-
+      "slot": 3,
       "after": "screen",
       "icon": "pizza"
     },
