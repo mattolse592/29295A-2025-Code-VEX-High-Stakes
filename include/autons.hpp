@@ -7,6 +7,7 @@ void redAWP(); // Red AWP. Ring on alliance, Two rings on one mogo, one on the o
 void blueRingRushElim();
 void redPosAWP();
 void RedRingRushCorner();
+void BlueRingRushCorner();
 void redRingRushElim();
 void redMogoRush();
 void skills();

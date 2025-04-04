@@ -742,6 +742,84 @@ void RedRingRushCorner() {
 
 }
 
+void BlueRingRushCorner() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(false);
+  ch->slew_drive_set(true);
+
+  //rush the rings
+  ch->drive_angle_set(24_deg);
+  ch->pid_drive_set(40, 120, false);
+  brain->doinkerOn = true;
+  brain->intakeOn = true;
+  ch->pid_wait();
+  pros::delay(200);
+  brain->rollerOnly = true;
+
+  //pull the rings back into the mogo
+  ch->pid_turn_set(60, TURN_SPEED - 30);
+  ch->pid_wait();
+  ch->pid_drive_set(-23, DRIVE_SPEED - 40);
+  ch->pid_wait_quick_chain();
+  brain->doinkerOn = false;
+  brain->mogoOn = true;
+  brain->rollerOnly = false;
+  pros::delay(100);
+
+  //turn turn to solo ring stack
+  ch->pid_turn_set(80_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(22, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+
+  //turn to corner stack
+  ch->pid_turn_set(170_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(37, DRIVE_SPEED);
+  ch->pid_wait();
+  ch->pid_turn_set(135_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //go into corner
+  ch->pid_drive_set(8, DRIVE_SPEED - 60);
+  ch->pid_wait();
+  pros::delay(200);
+
+  //back away
+  ch->pid_drive_set(-10, DRIVE_SPEED - 85);
+  ch->pid_wait();
+  ch->pid_drive_set(2, DRIVE_SPEED - 60);
+  ch->pid_wait();
+  pros::delay(400);
+  //drive in and lift intake
+  brain->intakeLiftOn = true;
+  ch->pid_drive_set(10, DRIVE_SPEED - 70);
+  ch->pid_wait();
+  brain->intakeLiftOn = false;
+  pros::delay(500);
+  ch->pid_drive_set(-12, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //go to middle stakc
+  ch->pid_turn_set(-90_deg, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(20, DRIVE_SPEED);
+  ch->pid_wait();
+
+  brain->intakeLiftOn = true;
+  ch->pid_drive_set(8, DRIVE_SPEED - 30);
+  ch->pid_wait();
+  brain->intakeLiftOn = false;
+
+  ch->pid_drive_set(8, DRIVE_SPEED - 30);
+  ch->pid_wait();
+
+
+}
+
 void redHalfAWP() {
 
   Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
