@@ -37,7 +37,7 @@ public:
     TapButton Up_;
     TapButton Down_;
     HoldButton Left_;
-    HoldButton Right_;
+    TapButton Right_;
 
 public:
     MatthewController() :

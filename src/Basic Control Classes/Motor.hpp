@@ -3,6 +3,11 @@
 
 #include "../include/pros/motors.hpp"
 #include "../include/pros/motors.h"
+
+//temp
+#include "Stick.hpp"
+
+
 class Motor
 {
 
@@ -10,6 +15,8 @@ private:
     int MotorSpeed_;
     int ReverseTimer_ = 0;
     int StalledTimer_ = 0;
+    bool Stalled_ = false;
+
     pros::Motor Motor_;
 
 public:
@@ -19,13 +26,19 @@ public:
     }
 
     void Tick() {
+
         if (std::abs(Motor_.get_actual_velocity()) / 1.5 < 10 && std::abs(MotorSpeed_) > 50) {
             StalledTimer_++;
         }
-
-        if (StalledTimer_ > 30 && pros::competition::is_autonomous) {
+        
+        if (StalledTimer_ > 30) {
             ReverseTimer_ = 15;
             StalledTimer_ = 0;
+            Stalled_ = true;
+
+        }
+        else {
+            Stalled_ = false;
         }
         ReverseTimer_--;
     }
@@ -47,6 +60,10 @@ public:
 
     void SetBrakeMode(pros::motor_brake_mode_e brakeMode) {
         Motor_.set_brake_mode(brakeMode);
+    }
+
+    bool IsStalled() {
+        return Stalled_;
     }
 };
 #endif  // MOTOR_HPP

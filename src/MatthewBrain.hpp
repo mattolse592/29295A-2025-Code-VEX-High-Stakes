@@ -18,6 +18,13 @@ private:
     bool RushArmOn_ = false;
     bool RushJawOn_ = false;
 
+    //arm timer
+    int ZeroTimer = 0;
+    int DescoreWaitAmount = 500;
+    int DescoreIntervalTimer = DescoreWaitAmount;
+    int DownPressedAmount = 0;
+    bool VibrateOnce = false;
+
 public:
     MatthewBrain(Robot* Robot)
         : Robot_(Robot), Controller_()
@@ -25,23 +32,6 @@ public:
     {
         Controller_.Y_.setValue(true);
         Robot_->Intake_.SetArmDocked(false);
-
-        // //initialize the robot to your starting state
-        // Robot_->Mogo_.Deactivate();
-        // Robot_->Doinker_.Deactivate();
-        // Robot_->rushArm_.Deactivate();
-        // Robot_->rushClamp_.Deactivate();
-
-        // Robot_->Intake_.Stop();
-        // Robot_->Arm_.Zero();
-
-        // // turn off slew
-        // Robot->DriveTrain_.DriveTrain_.Chassis_.slew_drive_set(false);
-
-        // //turn off drive pid
-        // Robot_->DriveTrain_.DriveTrain_.Chassis_.pid_targets_reset();
-
-
     }
 
     void Tick()
@@ -79,18 +69,42 @@ public:
         //arm
         //
         if (Controller_.Left_.IsPressed()) {
-            Robot_->Arm_.Zero();
+            ZeroTimer++;
+
+            if (ZeroTimer > 50) {
+                Robot_->Arm_.Zero();
+                Controller_.Vibrate();
+                ZeroTimer = 0;
+
+                Controller_.L1_.SetPressed(0);
+                Robot_->Arm_.SetTarget((Arm::State)(Controller_.L1_.TimesPressed() % 4));
+            }
         }
 
         if (Controller_.Down_.WasTapped()) {
-            Robot_->Arm_.MoveDown();
+            if (Robot_->Arm_.GetState() > 4) {
+                if (Robot_->Arm_.GetState() == 10) {
+                    Robot_->Arm_.SetTarget((Arm::State)(10));
+                } else {
+                    Robot_->Arm_.SetTarget((Arm::State)(Robot_->Arm_.GetState() + 1));
+                }
+                
+                DownPressedAmount++;
+            } else {
+                Robot_->Arm_.MoveDown();
+            }
         }
 
         if (Controller_.Up_.WasTapped()) {
-            Robot_->Arm_.MoveUp();
+            if (Robot_->Arm_.GetState() > 5) {
+                Robot_->Arm_.SetTarget((Arm::State)(Robot_->Arm_.GetState() - 1));
+                DownPressedAmount--;
+            } else {
+                Robot_->Arm_.MoveUp();
+            }
         }
 
-        if (Controller_.Right_.IsPressed()) {
+        if (Controller_.Right_.WasTapped()) {
             if (Robot_->Arm_.GetState() == Arm::LOAD) {
                 Controller_.L1_.SetPressed(0);
             }
@@ -108,12 +122,35 @@ public:
         }
 
         if (Controller_.X_.WasTapped()) {
-            Robot_->Arm_.SetTarget(Arm::DESCORE);
+            if (DescoreIntervalTimer < DescoreWaitAmount) {
+                DownPressedAmount++;
+
+                if (DownPressedAmount > 5) {
+                    DownPressedAmount = 5;
+                } else if (DownPressedAmount < 0) {
+                    DownPressedAmount = 0;
+                }
+
+                Robot_->Arm_.SetTarget((Arm::State)(5 + DownPressedAmount));
+                master.rumble(".");
+            } else {
+                Robot_->Arm_.SetTarget(Arm::DESCORE1);
+                DownPressedAmount = 0;
+            }
+            
             Controller_.L1_.SetPressed(3);
             Robot_->Arm_.ManualTakeoverSet(false);
+            DescoreIntervalTimer = 0;
+            VibrateOnce = false;
+
         }
 
+        DescoreIntervalTimer++;
 
+        if (DescoreIntervalTimer > DescoreWaitAmount && !VibrateOnce) { 
+            Controller_.Vibrate();
+            VibrateOnce = true;
+        }
 
         //
         //pistons
@@ -140,7 +177,6 @@ public:
             if (Controller_.B_.WasTapped()) {
                 DoinkerOn_ = !DoinkerOn_;
             }
-
         }
 
         Robot_->Mogo_.SetValue(MogoOn_);

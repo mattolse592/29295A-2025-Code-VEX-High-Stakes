@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "blueCornerRingRush",
+    "project_name": "arm test",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -427,7 +427,7 @@
       "description": "fark",
       "slot": 1,
       "after": "screen",
-      "icon": "power"
+      "icon": "pizza"
     },
     "use_early_access": false
   }

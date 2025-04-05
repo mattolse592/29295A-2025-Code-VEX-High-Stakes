@@ -2,7 +2,6 @@
 #include "Robot.hpp"
 #include "MatthewBrain.hpp"
 
-
 Robot* robot;
 
 
