@@ -40,7 +40,7 @@ public:
           DriveTrain_()
 
     {
-        Arm_.Zero();
+        Arm_.RotationSensorZero();
         Intake_.SortOn();
     }
 

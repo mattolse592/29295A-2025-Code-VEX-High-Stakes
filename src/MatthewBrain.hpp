@@ -32,6 +32,7 @@ public:
     {
         Controller_.Y_.setValue(true);
         Robot_->Intake_.SetArmDocked(false);
+        Robot_->Arm_.Zero();
     }
 
     void Tick()

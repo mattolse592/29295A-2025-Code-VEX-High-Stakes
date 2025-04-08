@@ -62,7 +62,7 @@ public:
                 pid_.setTarget(2.0);
                 break;
             case LOAD:
-                pid_.setTarget(28.0);
+                pid_.setTarget(26.0);
                 break;
             case REACH:
                 pid_.setTarget(130.0);
@@ -137,6 +137,10 @@ public:
     void Zero() {
         ZeroMode_ = true;
         ManualTakeoverSet(true);
+    }
+
+    void RotationSensorZero() {
+        RotationSensor_.Zero();
     }
 
 #pragma region get functions
