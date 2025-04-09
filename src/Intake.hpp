@@ -21,7 +21,7 @@ public:
     Intake(Motor Preroller, Motor Hooks)
         : Preroller_(Preroller), Hooks_(Hooks)
     {
-        Hooks_.SetBrakeMode(MOTOR_BRAKE_COAST);
+        SetHookBrakeCoast();
         ArmIsDocked_ = true;
     }
 
@@ -106,6 +106,14 @@ public:
 
     void SetArmDocked(bool ArmIsDocked) {
         ArmIsDocked_ = ArmIsDocked;
+    }
+
+    void SetHookBrakeBrake() {
+        Hooks_.SetBrakeMode(MOTOR_BRAKE_BRAKE);
+    }
+
+    void SetHookBrakeCoast() {
+        Hooks_.SetBrakeMode(MOTOR_BRAKE_COAST);
     }
 
 };

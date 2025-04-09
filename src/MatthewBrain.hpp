@@ -120,6 +120,9 @@ public:
         if (Controller_.L1_.IsHeld()) {
             Robot_->Arm_.SetTarget((Arm::State)(Controller_.L1_.TimesPressed() % 4));
             Robot_->Arm_.ManualTakeoverSet(false);
+            Robot_->Intake_.SetHookBrakeCoast();
+        } else {
+            Robot_->Intake_.SetHookBrakeBrake();
         }
 
         if (Controller_.X_.WasTapped()) {
