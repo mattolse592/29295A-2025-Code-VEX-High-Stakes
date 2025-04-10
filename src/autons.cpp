@@ -9,7 +9,7 @@
 /////
 
 // These are out of 127
-int DRIVE_SPEED = 115;
+int DRIVE_SPEED = 110;
 int TURN_SPEED = 80;
 const int SWING_SPEED = 110;
 
@@ -176,6 +176,100 @@ void blueAWP() {
 
   //drives into stake
   ch->pid_drive_set(44, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+}
+
+void red4Ring() {
+  Drive* ch = &robot->DriveTrain_.DriveTrain_.Chassis_;
+  robot->IsAutonomous = true;
+  brain = new AutonBrain(robot);
+  pros::Task tickTask(brainTick);
+  brain->SetAllianceAsRed(true);
+  ch->slew_drive_set(true);
+
+  DRIVE_SPEED = 115;
+
+  //score alliancew staKE
+  brain->armPos = Arm::LOAD;
+  brain->intakeOn = true;
+  pros::delay(600);
+  ch->pid_drive_set(2.5, DRIVE_SPEED);
+  brain->intakeOn = false;
+  brain->armPos = Arm::SCORE;
+  pros::delay(600);
+
+  //grab alliance ring 
+  ch->pid_drive_set(-12, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->armPos = Arm::DOCK;
+  brain->intakeLiftOn = true;
+  ch->pid_turn_set(35, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->intakeOn = true;
+  ch->pid_drive_set(19, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+  brain->intakeLiftOn = false;
+  pros::delay(300);
+  brain->rollerOnly = true;
+  pros::delay(200);
+  ch->pid_drive_set(-11, DRIVE_SPEED - 30);
+  ch->pid_wait_quick_chain();
+
+  //grab mogo 
+  ch->pid_turn_set(-45, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-25, DRIVE_SPEED - 40);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = true;
+  brain->rollerOnly = false;
+  pros::delay(200);
+
+  //grab ring stack
+  ch->pid_turn_set(-137, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(24, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //go to corner
+  ch->pid_turn_set(-55, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(25, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  ch->pid_turn_set(-95, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //go into corner
+  ch->pid_drive_set(8, DRIVE_SPEED - 50);
+  ch->pid_wait();
+  pros::delay(200);
+
+  //back away
+  ch->pid_drive_set(-10, DRIVE_SPEED);
+  ch->pid_wait();
+  ch->pid_drive_set(4, DRIVE_SPEED - 30);
+  ch->pid_wait();
+  pros::delay(200);
+
+  //drive in and lift intake
+  brain->intakeLiftOn = true;
+  ch->pid_drive_set(10, DRIVE_SPEED - 20);
+  ch->pid_wait();
+  brain->intakeLiftOn = false;
+  pros::delay(500);
+  ch->pid_drive_set(-12, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+
+  //drop mogo
+  ch->pid_turn_set(30, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-5, DRIVE_SPEED);
+  ch->pid_wait_quick_chain();
+  brain->mogoOn = false;
+  ch->pid_turn_set(-50, TURN_SPEED);
+  ch->pid_wait_quick_chain();
+  ch->pid_drive_set(-30, DRIVE_SPEED);
   ch->pid_wait_quick_chain();
 
 }

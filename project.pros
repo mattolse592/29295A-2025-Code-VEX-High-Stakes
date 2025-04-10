@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "bluePosAWP",
+    "project_name": "red4Ring",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,7 +425,7 @@
     },
     "upload_options": {
       "description": "fark",
-      "slot": 1,
+      "slot": 5,
       "after": "screen",
       "icon": "pizza"
     },
