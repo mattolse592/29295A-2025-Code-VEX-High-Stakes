@@ -68,7 +68,7 @@ public:
                 pid_.setTarget(130.0);
                 break;
             case SCORE:
-                pid_.setTarget(235.0);
+                pid_.setTarget(260.0);
                 break;
             case REMOTE:
                 pid_.setTarget(90.0);
