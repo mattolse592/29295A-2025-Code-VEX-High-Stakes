@@ -6,7 +6,8 @@ void blueAWP(); // Blue AWP. Ring on alliance, Two rings on one mogo, one on the
 void redAWP(); // Red AWP. Ring on alliance, Two rings on one mogo, one on the other, ends with touching the bar
 void blueRingRushElim();
 void redPosAWP();
-void red4Ring();
+void redPos4Ring();
+void bluePos4Ring();
 void bluePosAWP();
 void RedRingRushCorner();
 void BlueRingRushCorner();
