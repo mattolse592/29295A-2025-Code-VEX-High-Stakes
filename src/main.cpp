@@ -42,7 +42,7 @@ void initialize() {
     //{"Blue AWP", blueAWP},
     //{"Red Baker auto", redPosAWP},
     //{"Blue Baker auto", bluePosAWP},
-    {"Red 4 Ring", red4Ring},
+    //{"Red 4 Ring", red4Ring},
     // {"Red Ring rush Corner", RedRingRushCorner},
     //{"Blue Ring rush Corner", BlueRingRushCorner},
     //{"Blue Ring rush Elim", blueRingRushElim},

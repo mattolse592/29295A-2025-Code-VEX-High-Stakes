@@ -2,7 +2,7 @@
 #define INTAKE_HPP
 
 #include "Basic Control Classes/Motor.hpp"
-#include "RingDetector.hpp"
+#include "RingDetector2.hpp"
 
 class Intake
 {
@@ -11,7 +11,7 @@ private:
     Motor Preroller_;
     Motor Hooks_;
 
-    RingDetector RingDetector_;
+    RingDetector2 RingDetector_;
 
     int PreRollerSpeed_;
     int HooksSpeed_;
@@ -33,7 +33,7 @@ public:
     void OutputTick() {
         Preroller_.SetSpeed(PreRollerSpeed_);
 
-        if (RingDetector_.GetReverseTimer() > 0) {
+        if (RingDetector_.GetReverseTimer() > 0 && RingDetector_.GetReverseTimer() < 20) {
             Hooks_.SetSpeed(127);
         }
         else  if (Hooks_.GetReverseTimer() > 0 && ArmIsDocked_) {
