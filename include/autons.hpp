@@ -5,7 +5,8 @@ void default_constants();
 void blueAWP(); // Blue AWP. Ring on alliance, Two rings on one mogo, one on the other, ends with touching the bar
 void redAWP(); // Red AWP. Ring on alliance, Two rings on one mogo, one on the other, ends with touching the bar
 void blueRingRushElim();
-void redPosAWP();
+void redBakerElim();
+void redBakerQual();
 void redPos4Ring();
 void bluePos4Ring();
 void bluePosAWP();

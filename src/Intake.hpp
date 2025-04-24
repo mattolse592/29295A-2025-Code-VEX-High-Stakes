@@ -43,7 +43,6 @@ public:
             Hooks_.SetSpeed(HooksSpeed_);
         }
 
-        //fixez::screen_print(std::to_string(RingDetector_.GetReverseTimer()), 1);
     }
 
     void Forward()
