@@ -18,14 +18,22 @@ public:
 
     void Activate() {
         Port_.set_value(true);
+        State_ = true;
     }
 
     void Deactivate() {
         Port_.set_value(false);
+        State_ = false;
     }
 
     void SetValue(bool value) {
         Port_.set_value(value);
+        State_ = value;
+    }
+    
+
+    int GetValue() {
+        return State_;
     }
 };
 #endif  // PISTON_HPP

@@ -33,6 +33,9 @@ public:
         Controller_.Y_.setValue(true);
         Robot_->Intake_.SetArmDocked(false);
         Robot_->Arm_.Zero();
+        Robot_->Arm_.SetTarget(Arm::DOCK);
+
+        MogoOn_ = Robot_->Mogo_.GetValue();
     }
 
     void Tick()
