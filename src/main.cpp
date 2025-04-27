@@ -42,10 +42,10 @@ void initialize() {
     //{"Blue AWP", blueAWP},
     //{"Red Baker auto", redBakerElim},
     //{"Red Baker auto", redBakerQual}, //for comp
-    //{"Blue Baker auto", blueBakerQual},
-    //{"Blue Baker auto", bluePosAWP}, //for comp
+    //{"Blue Baker auto", blueBakerQual},//for comp
+    //{"Blue Baker auto", bluePosAWP}, 
     //{"Red 4 Ring", red4Ring},
-     //{"Red Ring rush Corner", RedRingRushCorner},
+     //{"Red Ring rush Corner", RedRingRushCorner}, //for comp
     {"Blue Ring rush Corner", BlueRingRushCorner},//for comp
     //{"Blue Ring rush Elim Corner", blueRingRushElim}, 
     //{"Blue half awp", blueHalfAWP},
@@ -194,8 +194,6 @@ void opcontrol() {
   MatthewBrain brain(robot);
   robot->DriveTrain_.DriveTrain_.Chassis_.drive_brake_set(MOTOR_BRAKE_COAST);
   robot->SetAllianceAsRed(false);
-
-  robot->Mogo_.Activate();
 
   while (true) {
     brain.Tick();

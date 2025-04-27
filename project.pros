@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "BlueElimCornerNegativeRigneRUsh",
+    "project_name": "BlueRingRushElim",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -425,9 +425,9 @@
     },
     "upload_options": {
       "description": "fark",
-      "slot": 1,
+      "slot": 3,
       "after": "screen",
-      "icon": "ufo"
+      "icon": "pizza"
     },
     "use_early_access": false
   }
