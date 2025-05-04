@@ -43,19 +43,22 @@ void initialize() {
     //{"Red Baker auto", redBakerElim},
     //{"Red Baker auto", redBakerQual}, //for comp
     //{"Blue Baker auto", blueBakerQual},//for comp
-    //{"Blue Baker auto", bluePosAWP}, 
-    //{"Red 4 Ring", red4Ring},
-     {"Red Ring rush Corner", RedRingRushCorner}, //for comp
-    //{"Blue Ring rush Corner", BlueRingRushCorner},//for comp
-    //{"Blue Ring rush Elim Corner", blueRingRushElim}, 
-    //{"Blue half awp", blueHalfAWP},
-    //{"Blue half awp", blue3RingAWP},
-   // {"red half awp", red3RingAWP},
-    //{"Red half awp", redHalfAWP},
-    //{"red Ring rush Elim", redRingRushElim},
-    //{"Red Mogo rush", redMogoRush}
-    //{"skills", skills},
-    //{"Red Side Mogo Rush Half AWP", redMogoRushHalfAWP},
+
+    //{"Blue Baker auto", blueBakerElim}, 
+    //{"Red 6 Ring", red6Ring},
+    {"blue 6 Ring", blue6Ring},
+    //{"Red Ring rush Corner", RedRingRushCorner}, //for comp
+   //{"Blue Ring rush Corner", BlueRingRushCorner},//for comp
+   //{"Blue Ring rush Elim Corner", blueRingRushElim}, 
+   //{"Blue half awp", blueHalfAWP},
+   //{"Blue half awp", blue3RingAWP},
+  // {"red half awp", red3RingAWP},
+   //{"Red half awp", redHalfAWP},
+   //{"red Ring rush Elim", redRingRushElim},
+   //{"Red Mogo rush", redMogoRush}
+   //{"skills", skills},
+   //{"Red Side Mogo Rush Half AWP", redMogoRushHalfAWP},
+
     });
 
   ez::as::initialize();
@@ -71,6 +74,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
+
   // . . .
 }
 
@@ -84,7 +88,7 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
-  // . . .
+// . .
 }
 
 /**
