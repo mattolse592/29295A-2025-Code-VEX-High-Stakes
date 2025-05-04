@@ -45,8 +45,8 @@ void initialize() {
     //{"Blue Baker auto", blueBakerQual},//for comp
     //{"Blue Baker auto", bluePosAWP}, 
     //{"Red 4 Ring", red4Ring},
-     //{"Red Ring rush Corner", RedRingRushCorner}, //for comp
-    {"Blue Ring rush Corner", BlueRingRushCorner},//for comp
+     {"Red Ring rush Corner", RedRingRushCorner}, //for comp
+    //{"Blue Ring rush Corner", BlueRingRushCorner},//for comp
     //{"Blue Ring rush Elim Corner", blueRingRushElim}, 
     //{"Blue half awp", blueHalfAWP},
     //{"Blue half awp", blue3RingAWP},
@@ -193,7 +193,7 @@ void opcontrol() {
   robot->IsAutonomous = false;
   MatthewBrain brain(robot);
   robot->DriveTrain_.DriveTrain_.Chassis_.drive_brake_set(MOTOR_BRAKE_COAST);
-  robot->SetAllianceAsRed(false);
+  robot->SetAllianceAsRed(true);
 
   while (true) {
     brain.Tick();
