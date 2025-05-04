@@ -43,6 +43,7 @@ void initialize() {
     //{"Red Baker auto", redBakerElim},
     //{"Red Baker auto", redBakerQual}, //for comp
     //{"Blue Baker auto", blueBakerQual},//for comp
+
     //{"Blue Baker auto", blueBakerElim}, 
     //{"Red 6 Ring", red6Ring},
     {"blue 6 Ring", blue6Ring},
@@ -57,6 +58,7 @@ void initialize() {
    //{"Red Mogo rush", redMogoRush}
    //{"skills", skills},
    //{"Red Side Mogo Rush Half AWP", redMogoRushHalfAWP},
+
     });
 
   ez::as::initialize();
