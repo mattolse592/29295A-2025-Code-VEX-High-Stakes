@@ -37,27 +37,38 @@ void initialize() {
   // // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.autons_add({
-    //{"Test Auton", testAuton},
-    //{"red AWP", redAWP},
-    //{"Blue AWP", blueAWP},
-    //{"Red Baker auto", redBakerElim},
-    //{"Red Baker auto", redBakerQual}, //for comp
-    //{"Blue Baker auto", blueBakerQual},//for comp
 
-    //{"Blue Baker auto", blueBakerElim}, 
-    //{"Red 6 Ring", red6Ring},
-    {"blue 6 Ring", blue6Ring},
-    //{"Red Ring rush Corner", RedRingRushCorner}, //for comp
-   //{"Blue Ring rush Corner", BlueRingRushCorner},//for comp
-   //{"Blue Ring rush Elim Corner", blueRingRushElim}, 
-   //{"Blue half awp", blueHalfAWP},
-   //{"Blue half awp", blue3RingAWP},
-  // {"red half awp", red3RingAWP},
-   //{"Red half awp", redHalfAWP},
-   //{"red Ring rush Elim", redRingRushElim},
-   //{"Red Mogo rush", redMogoRush}
-   //{"skills", skills},
-   //{"Red Side Mogo Rush Half AWP", redMogoRushHalfAWP},
+// {"Red Baker auto", redBakerQualNewField}, //for comp
+ //{"Blue Baker auto", blueBakerQualNewField},//for comp
+
+ //{"Red 6 Ring", red6Ring}, //for comp
+ //{"blue 6 Ring", blue6Ring}, //for comp
+
+ //{"Red Ring rush Corner", RedRingRushCornerNewField}, //for comp
+ {"Blue Ring rush Corner", BlueRingRushCornerNewField},//for comp
+
+ //{"1023E alliance q42", Q42RedPos}
+ //{"Red alliance q179", Oneplus3Q179}
+
+
+
+   //{"Test Auton", testAuton},
+   //{"red AWP", redAWP},
+   //{"Blue AWP", blueAWP},
+   //{"Red Baker auto", redBakerElim},
+
+   //{"Blue Baker auto", blueBakerElim}, 
+
+
+  //{"Blue Ring rush Elim Corner", blueRingRushElim}, 
+  //{"Blue half awp", blueHalfAWP},
+  //{"Blue half awp", blue3RingAWP},
+ // {"red half awp", red3RingAWP},
+  //{"Red half awp", redHalfAWP},
+  //{"red Ring rush Elim", redRingRushElim},
+  //{"Red Mogo rush", redMogoRush}
+  //{"skills", skills},
+  //{"Red Side Mogo Rush Half AWP", redMogoRushHalfAWP},
 
     });
 
@@ -88,7 +99,7 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
-// . .
+  // . .
 }
 
 /**
@@ -197,7 +208,7 @@ void opcontrol() {
   robot->IsAutonomous = false;
   MatthewBrain brain(robot);
   robot->DriveTrain_.DriveTrain_.Chassis_.drive_brake_set(MOTOR_BRAKE_COAST);
-  robot->SetAllianceAsRed(true);
+  robot->SetAllianceAsRed(false);
 
   while (true) {
     brain.Tick();

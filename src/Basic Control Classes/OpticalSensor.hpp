@@ -23,7 +23,7 @@ public:
 
     RingType GetRing() {
         if (Proximity_ <= MIN_RING_DISTANCE) return RingType::None;
-        if (Hue_ >= 180 && Hue_ <= 230) return RingType::Blue;
+        if (Hue_ >= 180 && Hue_ <= 245) return RingType::Blue;
         if (Hue_ >= 340 || Hue_ <= 20) return RingType::Red;
         return RingType::None;
     }

@@ -2,16 +2,23 @@
 
 void default_constants();
 
+void Oneplus3Q179();
+void Q42RedPos();
 void blueAWP(); // Blue AWP. Ring on alliance, Two rings on one mogo, one on the other, ends with touching the bar
 void redAWP(); // Red AWP. Ring on alliance, Two rings on one mogo, one on the other, ends with touching the bar
 void blueRingRushElim();
 void redBakerElim();
 void redBakerQual();
 void blueBakerQual();
+void Q42RedPos();
 void red6Ring();
 void blue6Ring();
 void bluePos4Ring();
 void blueBakerElim();
+void BlueRingRushCornerNewField();
+void RedRingRushCornerNewField();
+void redBakerQualNewField();
+void blueBakerQualNewField();
 void RedRingRushCorner();
 void BlueRingRushCorner();
 void redRingRushElim();

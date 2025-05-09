@@ -32,7 +32,7 @@ public:
         }
         
         if (StalledTimer_ > 30) {
-            ReverseTimer_ = 15;
+            ReverseTimer_ = 20;
             StalledTimer_ = 0;
             Stalled_ = true;
 
